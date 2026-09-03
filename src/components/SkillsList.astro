@@ -1,0 +1,17 @@
+---
+import { profile } from '../data/profile';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+<ul class="mt-5 space-y-1.5 text-sm text-neutral-600 dark:text-neutral-400">
+  {profile.skills.map((group) => (
+    <li>
+      <span class="font-semibold text-neutral-800 dark:text-neutral-200">{group.category[lang]}:</span>
+      {' '}{group.items.join(', ')}
+    </li>
+  ))}
+</ul>

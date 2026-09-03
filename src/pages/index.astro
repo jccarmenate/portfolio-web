@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
 import { profile } from '../data/profile';
 
 const lang = 'es' as const;
 ---
 <BaseLayout lang={lang} title={profile.name} description={profile.bio[lang]}>
-  <section id="home" class="mx-auto max-w-4xl px-7 py-16 lg:px-0">
-    <p class="text-neutral-600 dark:text-neutral-400">Contenido próximamente.</p>
-  </section>
+  <Hero lang={lang} />
 </BaseLayout>

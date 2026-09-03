@@ -1,0 +1,38 @@
+---
+import AvatarFrame from './AvatarFrame.astro';
+import SkillsList from './SkillsList.astro';
+import Button from './Button.astro';
+import { profile } from '../data/profile';
+import type { Lang } from '../i18n/ui';
+import { es } from '../i18n/es';
+import { en } from '../i18n/en';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const dict = lang === 'es' ? es : en;
+---
+<section id="home" class="relative mx-auto max-w-4xl px-7 pt-16 pb-10 lg:px-0">
+  <div class="grid gap-8 md:grid-cols-[1fr_260px] md:items-center">
+    <div>
+      <p class="text-sm font-semibold text-neutral-500 dark:text-neutral-400">
+        {dict.hero.greeting} 👋 {dict.hero.intro}
+      </p>
+      <h1 class="mt-2 mb-5 text-4xl leading-tight font-bold">
+        <span class="text-emerald-400">{profile.name}</span>
+      </h1>
+      <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+        {profile.bio[lang]}
+      </p>
+      <p class="mt-4 text-sm font-medium text-neutral-800 dark:text-neutral-200">
+        {profile.roleLine[lang]}
+      </p>
+      <SkillsList lang={lang} />
+      <div class="mt-6">
+        <Button href="#services" label={dict.hero.ctaServices} />
+      </div>
+    </div>
+    <AvatarFrame />
+  </div>
+</section>
