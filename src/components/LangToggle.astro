@@ -1,0 +1,13 @@
+---
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const target = lang === 'es' ? '/en/' : '/';
+const label = lang === 'es' ? 'EN' : 'ES';
+---
+<a href={target} class="text-xs font-bold uppercase tracking-widest text-neutral-700 hover:text-emerald-400 dark:text-neutral-200">
+  {label}
+</a>

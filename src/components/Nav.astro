@@ -1,0 +1,51 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import LangToggle from './LangToggle.astro';
+import type { Lang } from '../i18n/ui';
+import { es } from '../i18n/es';
+import { en } from '../i18n/en';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const dict = lang === 'es' ? es : en;
+const homeHref = lang === 'es' ? '/' : '/en/';
+---
+<header class="relative mx-auto flex max-w-4xl items-center justify-between px-7 py-6 lg:px-0">
+  <a href={homeHref} class="flex items-center gap-2 text-sm font-bold text-neutral-900 dark:text-neutral-100">
+    <img src="/logo.svg" alt="jccarmenate" class="h-6 w-auto" />
+  </a>
+
+  <button
+    id="nav-toggle"
+    class="flex h-8 w-8 items-center justify-center text-neutral-700 sm:hidden dark:text-neutral-200"
+    aria-label="Toggle menu"
+    aria-expanded="false"
+  >
+    <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"></path>
+    </svg>
+  </button>
+
+  <nav
+    id="nav-menu"
+    class="absolute top-20 right-4 left-4 hidden flex-col gap-4 rounded-xl border border-dashed border-neutral-300 bg-white p-4 text-sm font-medium text-neutral-700 sm:static sm:flex sm:flex-row sm:items-center sm:gap-6 sm:border-none sm:bg-transparent sm:p-0 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-200"
+  >
+    <a href={`${homeHref}#home`} class="hover:text-emerald-400">{dict.nav.home}</a>
+    <a href={`${homeHref}#experience`} class="hover:text-emerald-400">{dict.nav.experience}</a>
+    <a href={`${homeHref}#projects`} class="hover:text-emerald-400">{dict.nav.projects}</a>
+    <a href={`${homeHref}#services`} class="hover:text-emerald-400">{dict.nav.services}</a>
+    <LangToggle lang={lang} />
+    <ThemeToggle />
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-menu');
+  toggle?.addEventListener('click', () => {
+    const isHidden = menu?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(!isHidden));
+  });
+</script>

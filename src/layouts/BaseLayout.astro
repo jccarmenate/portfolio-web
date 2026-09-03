@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import DotGridBackground from '../components/DotGridBackground.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+}
+const { lang, title, description } = Astro.props;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      if (
+        localStorage.getItem('theme') === 'dark' ||
+        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="relative bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
+    <DotGridBackground />
+    <div class="relative z-10">
+      <Nav lang={lang} />
+      <main>
+        <slot />
+      </main>
+      <Footer lang={lang} />
+    </div>
+  </body>
+</html>
