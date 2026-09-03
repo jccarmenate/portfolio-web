@@ -1,0 +1,40 @@
+---
+import Badge from './Badge.astro';
+import { experience } from '../data/experience';
+import type { Lang } from '../i18n/ui';
+import { es } from '../i18n/es';
+import { en } from '../i18n/en';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const dict = lang === 'es' ? es : en;
+---
+<section id="experience" class="mx-auto max-w-4xl px-7 py-10 lg:px-0">
+  <h2 class="text-2xl leading-10 font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+    {dict.sections.experience}
+  </h2>
+  <div class="px-5 py-10">
+    {experience.map((entry) => (
+      <div class="border-l border-neutral-200 pb-10 last:pb-0 dark:border-neutral-700">
+        <div class="relative flex flex-col justify-start pl-12">
+          <span class="absolute top-0 left-0 z-10 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border border-neutral-300 bg-neutral-800 text-sm font-bold text-emerald-400 dark:border-neutral-700 dark:bg-neutral-950">
+            {entry.org.slice(0, 2).toUpperCase()}
+          </span>
+          <p class="text-xs tracking-widest text-neutral-400 uppercase dark:text-neutral-500">{entry.dateRange[lang]}</p>
+          <h3 class="my-1 text-lg font-bold dark:text-neutral-100">{entry.title[lang]}</h3>
+          {entry.orgUrl ? (
+            <a href={entry.orgUrl} target="_blank" rel="noopener" class="mb-1 text-sm font-medium underline dark:text-neutral-300">{entry.org}</a>
+          ) : (
+            <span class="mb-1 text-sm font-medium dark:text-neutral-300">{entry.org}</span>
+          )}
+          <p class="text-sm font-light text-neutral-600 dark:text-neutral-400">{entry.description[lang]}</p>
+          <div class="mt-2 flex flex-wrap">
+            {entry.tags.map((tag) => <Badge label={tag} />)}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
