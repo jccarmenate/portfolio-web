@@ -20,34 +20,44 @@ const cvDownloadName = lang === 'es' ? 'CV-Juan-Carlos-ES.pdf' : 'CV-Juan-Carlos
     <img src="/logo.svg" alt="jccarmenate" class="h-6 w-auto" />
   </a>
 
-  <button
-    id="nav-toggle"
-    class="flex h-8 w-8 items-center justify-center text-neutral-700 sm:hidden dark:text-neutral-200"
-    aria-label="Toggle menu"
-    aria-expanded="false"
-  >
-    <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"></path>
-    </svg>
-  </button>
+  <div class="flex items-center gap-3">
+    <nav
+      id="nav-menu"
+      class="absolute top-20 right-4 left-4 hidden flex flex-col gap-4 rounded-xl border border-dashed border-neutral-300 bg-white p-4 text-sm font-medium text-neutral-700 sm:static sm:flex sm:flex-row sm:items-center sm:gap-6 sm:border-none sm:bg-transparent sm:p-0 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-200"
+    >
+      <a href={`${homeHref}#home`} class="hover:text-emerald-400">{dict.nav.home}</a>
+      <a href={`${homeHref}#experience`} class="hover:text-emerald-400">{dict.nav.experience}</a>
+      <a href={projectsHref} class="hover:text-emerald-400">{dict.nav.projects}</a>
+      <a href={`${homeHref}#services`} class="hover:text-emerald-400">{dict.nav.services}</a>
+      <LangToggle lang={lang} />
+      <ThemeToggle />
+    </nav>
 
-  <nav
-    id="nav-menu"
-    class="absolute top-20 right-4 left-4 hidden flex flex-col gap-4 rounded-xl border border-dashed border-neutral-300 bg-white p-4 text-sm font-medium text-neutral-700 sm:static sm:flex sm:flex-row sm:items-center sm:gap-6 sm:border-none sm:bg-transparent sm:p-0 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-200"
-  >
-    <a href={`${homeHref}#home`} class="hover:text-emerald-400">{dict.nav.home}</a>
-    <a href={`${homeHref}#experience`} class="hover:text-emerald-400">{dict.nav.experience}</a>
-    <a href={projectsHref} class="hover:text-emerald-400">{dict.nav.projects}</a>
-    <a href={`${homeHref}#services`} class="hover:text-emerald-400">{dict.nav.services}</a>
-    <a href={cvHref} download={cvDownloadName} class="flex items-center gap-1 hover:text-emerald-400">
-      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <a
+      href={cvHref}
+      download={cvDownloadName}
+      aria-label={dict.nav.cv}
+      class="group relative flex h-8 w-8 items-center justify-center text-neutral-700 hover:text-emerald-400 dark:text-neutral-200"
+    >
+      <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"></path>
       </svg>
-      {dict.nav.cv}
+      <span class="pointer-events-none absolute top-full right-0 mt-2 rounded-md border border-neutral-300 bg-white px-2 py-1 text-xs font-medium whitespace-nowrap text-neutral-700 opacity-0 shadow-sm transition-opacity duration-150 group-hover:opacity-100 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200">
+        {dict.nav.cv}
+      </span>
     </a>
-    <LangToggle lang={lang} />
-    <ThemeToggle />
-  </nav>
+
+    <button
+      id="nav-toggle"
+      class="flex h-8 w-8 items-center justify-center text-neutral-700 sm:hidden dark:text-neutral-200"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"></path>
+      </svg>
+    </button>
+  </div>
 </header>
 
 <script>
