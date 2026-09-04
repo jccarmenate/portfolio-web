@@ -11,6 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 const dict = lang === 'es' ? es : en;
 const homeHref = lang === 'es' ? '/' : '/en/';
+const projectsHref = lang === 'es' ? '/proyectos' : '/en/projects';
 ---
 <header class="relative z-20 mx-auto flex max-w-4xl items-center justify-between px-7 py-6 lg:px-0">
   <a href={homeHref} class="flex items-center gap-2 text-sm font-bold text-neutral-900 dark:text-neutral-100">
@@ -34,7 +35,7 @@ const homeHref = lang === 'es' ? '/' : '/en/';
   >
     <a href={`${homeHref}#home`} class="hover:text-emerald-400">{dict.nav.home}</a>
     <a href={`${homeHref}#experience`} class="hover:text-emerald-400">{dict.nav.experience}</a>
-    <a href={`${homeHref}#projects`} class="hover:text-emerald-400">{dict.nav.projects}</a>
+    <a href={projectsHref} class="hover:text-emerald-400">{dict.nav.projects}</a>
     <a href={`${homeHref}#services`} class="hover:text-emerald-400">{dict.nav.services}</a>
     <LangToggle lang={lang} />
     <ThemeToggle />

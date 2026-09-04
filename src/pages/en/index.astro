@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
 import ExperienceTimeline from '../../components/ExperienceTimeline.astro';
-import ProjectsSection from '../../components/ProjectsSection.astro';
 import ServicesSection from '../../components/ServicesSection.astro';
 import { profile } from '../../data/profile';
 
@@ -11,6 +10,5 @@ const lang = 'en' as const;
 <BaseLayout lang={lang} title={profile.name} description={profile.bio[lang]}>
   <Hero lang={lang} />
   <ExperienceTimeline lang={lang} />
-  <ProjectsSection lang={lang} />
   <ServicesSection lang={lang} />
 </BaseLayout>
