@@ -5,8 +5,6 @@ const PALETTE: [string, string][] = [
   ['#4ade80', '#0d9488'],
 ];
 
-export function gradientForSlug(slug: string): [string, string] {
-  let hash = 0;
-  for (const ch of slug) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
-  return PALETTE[hash % PALETTE.length];
+export function gradientForIndex(index: number): [string, string] {
+  return PALETTE[index % PALETTE.length];
 }

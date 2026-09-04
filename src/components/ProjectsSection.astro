@@ -16,6 +16,6 @@ const dict = lang === 'es' ? es : en;
     {dict.sections.projects}
   </h2>
   <div class="mt-7 grid w-full grid-cols-1 items-stretch gap-7 sm:grid-cols-2 md:grid-cols-3">
-    {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
+    {projects.map((project, index) => <ProjectCard project={project} lang={lang} index={index} />)}
   </div>
 </section>

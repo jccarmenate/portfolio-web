@@ -1,13 +1,13 @@
 ---
-import { gradientForSlug } from '../lib/gradient';
+import { gradientForIndex } from '../lib/gradient';
 import { getInitials } from '../lib/getInitials';
 
 interface Props {
-  slug: string;
   title: string;
+  index: number;
 }
-const { slug, title } = Astro.props;
-const [from, to] = gradientForSlug(slug);
+const { title, index } = Astro.props;
+const [from, to] = gradientForIndex(index);
 const initials = getInitials(title);
 ---
 <div

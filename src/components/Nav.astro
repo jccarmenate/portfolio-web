@@ -12,7 +12,7 @@ const { lang } = Astro.props;
 const dict = lang === 'es' ? es : en;
 const homeHref = lang === 'es' ? '/' : '/en/';
 ---
-<header class="relative mx-auto flex max-w-4xl items-center justify-between px-7 py-6 lg:px-0">
+<header class="relative z-20 mx-auto flex max-w-4xl items-center justify-between px-7 py-6 lg:px-0">
   <a href={homeHref} class="flex items-center gap-2 text-sm font-bold text-neutral-900 dark:text-neutral-100">
     <img src="/logo.svg" alt="jccarmenate" class="h-6 w-auto" />
   </a>
@@ -47,5 +47,11 @@ const homeHref = lang === 'es' ? '/' : '/en/';
   toggle?.addEventListener('click', () => {
     const isHidden = menu?.classList.toggle('hidden');
     toggle.setAttribute('aria-expanded', String(!isHidden));
+  });
+  menu?.addEventListener('click', (event) => {
+    const link = (event.target as HTMLElement)?.closest('a');
+    if (!link) return;
+    menu.classList.add('hidden');
+    toggle?.setAttribute('aria-expanded', 'false');
   });
 </script>

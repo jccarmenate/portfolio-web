@@ -2,7 +2,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@layer utilities {
+@layer components {
   .gradient-text {
     background-image: linear-gradient(135deg, #a3e635 0%, #34d399 35%, #14b8a6 65%, #0891b2 100%);
     -webkit-background-clip: text;

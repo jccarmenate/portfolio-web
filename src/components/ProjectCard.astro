@@ -7,8 +7,9 @@ import type { Lang } from '../i18n/ui';
 interface Props {
   project: Project;
   lang: Lang;
+  index: number;
 }
-const { project, lang } = Astro.props;
+const { project, lang, index } = Astro.props;
 ---
 <a
   href={project.url}
@@ -19,7 +20,7 @@ const { project, lang } = Astro.props;
   <span class="absolute inset-0 z-10 block h-full w-full translate-x-1 translate-y-1 rounded-2xl border border-dashed border-neutral-300 duration-300 ease-out dark:border-neutral-600"></span>
   <span class="absolute inset-0 z-20 block h-full w-full rounded-2xl border border-dashed border-transparent duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:border-neutral-300 group-hover:bg-white dark:group-hover:border-neutral-600 dark:group-hover:bg-neutral-950"></span>
   <span class="relative z-30 block duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1">
-    <ProjectPreview slug={project.slug} title={project.title} />
+    <ProjectPreview title={project.title} index={index} />
     <span class="mt-4 mb-1 flex items-center text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
       {project.title}
       <svg class="ml-1 h-2.5 w-2.5 -translate-x-1 translate-y-1 -rotate-45 transform stroke-current opacity-0 transition-all duration-200 ease-in-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" viewBox="0 0 13 15" fill="none">
