@@ -15,7 +15,7 @@ export interface Profile {
 }
 
 export const profile: Profile = {
-  name: 'Juan Carlos Carmenate',
+  name: 'Juan Carlos',
   roleLine: {
     es: 'Estudiante de Ciencias de la Computación (último año) — Universidad de La Habana (MatCom)',
     en: 'Final-year Computer Science student — University of Havana (MatCom)',

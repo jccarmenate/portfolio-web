@@ -4,6 +4,7 @@ export const es = {
     experience: 'Experiencia',
     projects: 'Proyectos',
     services: 'Servicios',
+    cv: 'Descargar CV',
   },
   hero: {
     greeting: 'Hola',

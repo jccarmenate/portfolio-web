@@ -12,6 +12,8 @@ const { lang } = Astro.props;
 const dict = lang === 'es' ? es : en;
 const homeHref = lang === 'es' ? '/' : '/en/';
 const projectsHref = lang === 'es' ? '/proyectos' : '/en/projects';
+const cvHref = lang === 'es' ? '/cv-juan-carlos-carmenate-es.pdf' : '/cv-juan-carlos-carmenate-en.pdf';
+const cvDownloadName = lang === 'es' ? 'CV-Juan-Carlos-ES.pdf' : 'CV-Juan-Carlos-EN.pdf';
 ---
 <header class="relative z-20 mx-auto flex max-w-4xl items-center justify-between px-7 py-6 lg:px-0">
   <a href={homeHref} class="flex items-center gap-2 text-sm font-bold text-neutral-900 dark:text-neutral-100">
@@ -37,6 +39,12 @@ const projectsHref = lang === 'es' ? '/proyectos' : '/en/projects';
     <a href={`${homeHref}#experience`} class="hover:text-emerald-400">{dict.nav.experience}</a>
     <a href={projectsHref} class="hover:text-emerald-400">{dict.nav.projects}</a>
     <a href={`${homeHref}#services`} class="hover:text-emerald-400">{dict.nav.services}</a>
+    <a href={cvHref} download={cvDownloadName} class="flex items-center gap-1 hover:text-emerald-400">
+      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"></path>
+      </svg>
+      {dict.nav.cv}
+    </a>
     <LangToggle lang={lang} />
     <ThemeToggle />
   </nav>
