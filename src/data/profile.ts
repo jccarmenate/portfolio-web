@@ -15,14 +15,14 @@ export interface Profile {
 }
 
 export const profile: Profile = {
-  name: 'Juan Carlos',
+  name: 'Juan Carlos Carmenate',
   roleLine: {
     es: 'Estudiante de Ciencias de la Computación (último año) — Universidad de La Habana (MatCom)',
     en: 'Final-year Computer Science student — University of Havana (MatCom)',
   },
   bio: {
-    es: 'Soy estudiante de Ciencias de la Computación (último año) en la Universidad de La Habana (MatCom). Me gusta construir sistemas completos y funcionales: sistemas de IA agéntica que orquestan múltiples agentes LLM sobre un sandbox de ejecución real y aislado; recuperación de información e IA construidas desde cero en vez de con frameworks de orquestación prearmados; aplicaciones full-stack con autenticación real, jobs en segundo plano y funciones de IA que degradan con elegancia sin API key; programación de sistemas y redes a nivel de socket/kernel; y simulación, juegos y quant — un modelo epidemiológico vectorizado, una IA de juego MCTS hecha desde cero, y un dashboard de finanzas cuantitativas en vivo.',
-    en: "I'm a final-year Computer Science student at the University of Havana (MatCom) who likes shipping complete, working systems: agentic AI systems that orchestrate multiple LLM agents against a real, isolated execution sandbox; information retrieval and AI built from first principles rather than off-the-shelf orchestration frameworks; full-stack apps with real authentication, background jobs, and LLM features that degrade gracefully without an API key; systems and networks programming down at the socket/kernel level; and simulation, games and quant work — a vectorized epidemiological model, a from-scratch MCTS game AI, and a live quant-finance dashboard.",
+    es: 'Estudiante de último año de Ciencias de la Computación en la Universidad de La Habana (MatCom), con experiencia construyendo backends en Python y sistemas sobre modelos de lenguaje: fine-tuning de LLMs en producción, pipelines de RAG e infraestructura de agentes. Me gusta construir sistemas completos y funcionales — desde un sistema de recuperación de información hecho módulo a módulo desde cero, hasta un generador de código multiagente que ejecuta y se autocorrige dentro de un sandbox real y aislado. Busco oportunidades como Backend Engineer o AI Engineer.',
+    en: "Final-year Computer Science student at the University of Havana (MatCom), with experience building Python backends and systems on top of language models: production LLM fine-tuning, RAG pipelines, and agent infrastructure. I like building complete, working systems — from an information retrieval system built module-by-module from scratch, to a multi-agent code generator that runs and self-corrects inside a real, isolated sandbox. Looking for Backend Engineer or AI Engineer opportunities.",
   },
   skills: [
     {
