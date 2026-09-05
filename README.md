@@ -1,7 +1,6 @@
 # Portfolio — Juan Carlos
 
-Sitio personal construido con Astro + Tailwind CSS, inspirado visualmente
-en https://leynier.dev/.
+Sitio personal construido con Astro + Tailwind CSS.
 
 ## Desarrollo
 
