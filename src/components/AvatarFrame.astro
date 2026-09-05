@@ -1,21 +1,118 @@
 ---
-import { profile } from '../data/profile';
 ---
 <div class="relative mx-auto w-full max-w-[280px]">
   <div class="absolute -inset-3 rounded-2xl border-2 border-dashed border-emerald-400/70"></div>
   <div class="absolute -right-3 -bottom-3 -z-10 h-full w-full rounded-2xl bg-gradient-to-r from-white via-emerald-100 to-white dark:from-neutral-950 dark:via-emerald-950/30 dark:to-neutral-950"></div>
-  <div class="relative z-10 overflow-hidden rounded-xl border border-neutral-300 bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-950">
-    <div class="flex items-center gap-1.5 border-b border-neutral-200 px-4 py-2.5 dark:border-neutral-800">
+  <div class="relative z-10 overflow-hidden rounded-xl border border-neutral-700 bg-neutral-950 shadow-sm">
+    <div class="flex items-center gap-1.5 border-b border-neutral-800 px-4 py-2.5">
       <span class="h-2.5 w-2.5 rounded-full bg-red-400"></span>
       <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span>
       <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
-      <span class="ml-2 truncate text-[0.65rem] text-neutral-400 dark:text-neutral-500">whoami.sh</span>
+      <span class="ml-2 truncate text-[0.65rem] text-neutral-500">rain.sh</span>
     </div>
-    <div class="px-4 py-5 font-mono text-xs leading-relaxed">
-      <p><span class="text-emerald-500">$</span> <span class="text-neutral-700 dark:text-neutral-300">whoami</span></p>
-      <p class="mt-1 font-semibold text-neutral-900 dark:text-neutral-100">{profile.name}</p>
-      <p class="mt-3"><span class="text-emerald-500">$</span> <span class="text-neutral-700 dark:text-neutral-300">role --current</span></p>
-      <p class="mt-1 gradient-text font-semibold">Backend / AI Engineer</p>
+    <div class="relative h-[170px]">
+      <canvas id="rain-canvas" class="block h-full w-full" aria-hidden="true"></canvas>
     </div>
   </div>
 </div>
+
+<script>
+  const canvas = document.getElementById('rain-canvas') as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext('2d');
+
+  if (canvas && ctx) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let w = 0;
+    let h = 0;
+
+    interface Drop {
+      x: number;
+      y: number;
+      speed: number;
+    }
+
+    interface Layer {
+      pitch: number;
+      speed: number;
+      size: number;
+      blur: number;
+      alpha: number;
+      lead: string;
+      trail: string;
+      len: number;
+      drops: Drop[];
+    }
+
+    const chars = '01アイウエオカキクケコ';
+
+    function makeLayer(opts: Omit<Layer, 'drops'>): Layer {
+      const cols = Math.ceil(w / opts.pitch) + 1;
+      const cycle = h + 2 * opts.len * opts.size;
+      const drops: Drop[] = [];
+      for (let i = 0; i < cols; i++) {
+        drops.push({
+          x: i * opts.pitch + opts.pitch / 2,
+          y: Math.random() * cycle - opts.len * opts.size,
+          speed: opts.speed * (0.7 + Math.random() * 0.6),
+        });
+      }
+      return { ...opts, drops };
+    }
+
+    let layers: Layer[] = [];
+
+    function resize() {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      w = rect.width;
+      h = rect.height;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
+      layers = [
+        makeLayer({ pitch: 10, speed: 0.9, size: 11, blur: 1.1, alpha: 0.4, lead: 'rgba(150,255,210,0.55)', trail: 'rgba(52,211,153,0.35)', len: 9 }),
+        makeLayer({ pitch: 14, speed: 1.6, size: 14, blur: 0.4, alpha: 0.65, lead: 'rgba(200,255,225,0.8)', trail: 'rgba(52,211,153,0.6)', len: 12 }),
+        makeLayer({ pitch: 20, speed: 2.6, size: 18, blur: 0, alpha: 1, lead: 'rgba(230,255,235,1)', trail: 'rgba(120,235,180,0.9)', len: 15 }),
+      ];
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function drawLayer(layer: Layer) {
+      if (!ctx) return;
+      ctx.font = layer.size + 'px monospace';
+      ctx.textAlign = 'center';
+      ctx.filter = layer.blur ? `blur(${layer.blur}px)` : 'none';
+      layer.drops.forEach((d) => {
+        for (let k = 0; k < layer.len; k++) {
+          const cy = d.y - k * layer.size;
+          if (cy < -layer.size || cy > h + layer.size) continue;
+          const ch = chars[Math.floor(Math.random() * chars.length)];
+          ctx.fillStyle = k === 0 ? layer.lead : layer.trail;
+          ctx.globalAlpha = k === 0 ? layer.alpha : layer.alpha * (1 - k / layer.len);
+          ctx.fillText(ch, d.x, cy);
+        }
+        d.y += d.speed;
+        if (d.y - layer.len * layer.size > h) d.y = -layer.len * layer.size - Math.random() * h * 0.4;
+      });
+      ctx.globalAlpha = 1;
+      ctx.filter = 'none';
+    }
+
+    function frame() {
+      if (!ctx) return;
+      ctx.fillStyle = 'rgba(10,10,10,0.35)';
+      ctx.fillRect(0, 0, w, h);
+      layers.forEach(drawLayer);
+      requestAnimationFrame(frame);
+    }
+
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      requestAnimationFrame(frame);
+    } else if (ctx) {
+      ctx.fillStyle = '#0a0a0a';
+      ctx.fillRect(0, 0, w, h);
+    }
+  }
+</script>
