@@ -17,6 +17,7 @@ export const projects: Project[] = [
     },
     stack: ['Python', 'FastAPI', 'ChromaDB', 'React'],
     url: 'https://github.com/jccarmenate/tech-rag-information-retrieval-system',
+    image: '/projects/tech-rag.png',
   },
   {
     slug: 'multiagent-code-generator',
