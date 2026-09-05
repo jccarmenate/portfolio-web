@@ -4,6 +4,7 @@ export interface Project {
   description: Record<'es' | 'en', string>;
   stack: string[];
   url: string;
+  image?: string;
 }
 
 export const projects: Project[] = [
@@ -26,6 +27,7 @@ export const projects: Project[] = [
     },
     stack: ['Python', 'LangGraph', 'FastAPI', 'Docker', 'React'],
     url: 'https://github.com/jccarmenate/multiagent-code-generator',
+    image: '/projects/multiagent-code-generator.png',
   },
   {
     slug: 'guildwork',
@@ -36,6 +38,7 @@ export const projects: Project[] = [
     },
     stack: ['TypeScript', 'Express', 'Prisma', 'React'],
     url: 'https://github.com/jccarmenate/GuildWork',
+    image: '/projects/guildwork.png',
   },
   {
     slug: 'captive-portal',
