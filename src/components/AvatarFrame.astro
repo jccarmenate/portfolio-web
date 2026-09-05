@@ -48,6 +48,36 @@
         [['graph.', 'text'], ['set_entry_point', 'fn'], ['(', 'text'], ['"architect"', 'str'], [')', 'text']],
       ],
     },
+    {
+      file: 'auth.ts',
+      lines: [
+        [['function ', 'kw'], ['rotateToken', 'fn'], ['(old: string) {', 'text']],
+        [['  const p = ', 'text'], ['verify', 'fn'], ['(old, SECRET)', 'text']],
+        [['  ', 'text'], ['if ', 'kw'], ['(isRevoked(p.jti)) ', 'text'], ['throw ', 'kw'], ['new AuthError(', 'text'], ['"reuse"', 'str'], [')', 'text']],
+        [['  revoke(p.jti)', 'text']],
+        [['  ', 'text'], ['return ', 'kw'], ['issuePair(p.userId)', 'text']],
+        [['}', 'text']],
+      ],
+    },
+    {
+      file: 'portal.py',
+      lines: [
+        [['def ', 'kw'], ['authorize', 'fn'], ['(ip, mac, password):', 'text']],
+        [['    h = ', 'text'], ['pbkdf2_hmac', 'fn'], ['(', 'text'], ['"sha256"', 'str'], [', password, SALT)', 'text']],
+        [['    ', 'text'], ['if not ', 'kw'], ['compare_digest(h, stored_hash(mac)):', 'text']],
+        [['        ', 'text'], ['raise ', 'kw'], ['AuthError(', 'text'], ['"denied"', 'str'], [')', 'text']],
+        [['    ipset.add(', 'text'], ['"authorized"', 'str'], [', ip, mac)', 'text']],
+      ],
+    },
+    {
+      file: 'mcts.py',
+      lines: [
+        [['def ', 'kw'], ['select', 'fn'], ['(node):', 'text']],
+        [['    def ', 'kw'], ['score', 'fn'], ['(c):', 'text']],
+        [['        ', 'text'], ['return ', 'kw'], ['c.rave + C * ucb(node, c)', 'text']],
+        [['    ', 'text'], ['return ', 'kw'], ['max(node.children, key=score)', 'text']],
+      ],
+    },
   ];
 
   const titleEl = document.getElementById('code-title');
