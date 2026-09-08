@@ -22,6 +22,9 @@ full-stack development. Bilingual (Spanish default at `/`, English at
   offsets on hover, built from layered CSS transforms.
 - **CV download** — locale-aware PDF link (Spanish/English) always visible
   next to the mobile menu button, not buried in the nav.
+- **SEO basics** — canonical URLs, Open Graph + Twitter Card meta tags with
+  a generated 1200×630 social preview image, and an auto-generated sitemap
+  (`@astrojs/sitemap`) + `robots.txt`.
 
 ## Tech stack
 

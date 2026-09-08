@@ -28,6 +28,9 @@ información y desarrollo full-stack. Bilingüe (español por defecto en
 - **Descarga de CV** — link a PDF según el idioma (español/inglés),
   siempre visible junto al botón de menú móvil, no escondido dentro del
   nav.
+- **SEO básico** — URLs canónicas, meta tags Open Graph + Twitter Card con
+  una imagen de social preview generada (1200×630), y sitemap automático
+  (`@astrojs/sitemap`) + `robots.txt`.
 
 ## Stack técnico
 

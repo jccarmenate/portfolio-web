@@ -6,8 +6,9 @@ import ServicesSection from '../components/ServicesSection.astro';
 import { profile } from '../data/profile';
 
 const lang = 'es' as const;
+const title = `${profile.name} — Backend Engineer & AI Engineer`;
 ---
-<BaseLayout lang={lang} title={profile.name} description={profile.bio[lang]}>
+<BaseLayout lang={lang} title={title} description={profile.bio[lang]}>
   <Hero lang={lang} />
   <ExperienceTimeline lang={lang} />
   <ServicesSection lang={lang} />
