@@ -26,28 +26,32 @@ export const profile: Profile = {
   },
   skills: [
     {
+      category: { es: 'Lenguajes de programación', en: 'Programming languages' },
+      items: ['Python', 'TypeScript', 'JavaScript', 'C', 'C++', 'Rust', 'SQL'],
+    },
+    {
+      category: { es: 'IA / ML', en: 'AI / ML' },
+      items: ['LLM Fine-tuning', 'RAG', 'LangGraph', 'LangChain', 'ChromaDB', 'CLIP', 'Ollama', 'Anthropic API', 'Google ADK'],
+    },
+    {
       category: { es: 'Backend', en: 'Backend' },
-      items: ['Python', 'FastAPI', 'Node.js', 'Express'],
+      items: ['FastAPI', 'Express', 'SQLAlchemy', 'Prisma', 'PostgreSQL', 'SQLite', 'REST APIs', 'WebSockets'],
     },
     {
       category: { es: 'Frontend', en: 'Frontend' },
-      items: ['React', 'Flutter/Dart'],
-    },
-    {
-      category: { es: 'IA / Agentes', en: 'AI / Agents' },
-      items: ['LangChain/LangGraph', 'RAG', 'ChromaDB', 'Google ADK'],
-    },
-    {
-      category: { es: 'Bases de datos', en: 'Databases' },
-      items: ['PostgreSQL', 'Prisma', 'ChromaDB'],
+      items: ['React', 'Vite', 'Flutter/Dart'],
     },
     {
       category: { es: 'Sistemas y redes', en: 'Systems & networks' },
-      items: ['C', 'Sockets', 'iptables', 'nginx', 'GTK+3'],
+      items: ['Sockets (AF_PACKET)', 'iptables', 'nginx', 'GTK+3'],
     },
     {
       category: { es: 'Herramientas', en: 'Tools' },
-      items: ['Docker', 'GitHub Actions', 'Rust'],
+      items: ['Docker', 'Git', 'GitHub Actions', 'Linux', 'pytest', 'Vitest'],
+    },
+    {
+      category: { es: 'Idiomas', en: 'Languages spoken' },
+      items: ['Spanish (native)', 'English (B2)'],
     },
   ],
   contact: {

@@ -9,19 +9,6 @@ export interface ExperienceEntry {
 
 export const experience: ExperienceEntry[] = [
   {
-    dateRange: { es: '2025 – Presente', en: '2025 – Present' },
-    title: {
-      es: 'Alumno Ayudante — Lógica y Matemática Discreta',
-      en: 'Teaching Assistant — Logic and Discrete Mathematics',
-    },
-    org: 'Universidad de La Habana (MatCom)',
-    description: {
-      es: 'Imparto clases prácticas de Lógica y Matemática Discreta a estudiantes de primer año en la Facultad de Matemática y Computación, diseño y califico ejercicios y evaluaciones, y atiendo consultas individuales sobre demostraciones y lógica de predicados.',
-      en: 'Teaching practical sessions of Logic and Discrete Mathematics to first-year students at the Faculty of Mathematics and Computer Science, designing and grading exercises and exams, and holding one-on-one office hours on proofs and predicate logic.',
-    },
-    tags: ['Lógica', 'Matemática Discreta'],
-  },
-  {
     dateRange: { es: 'Enero 2025 – Octubre 2025 (10 meses)', en: 'January 2025 – October 2025 (10 months)' },
     title: {
       es: 'Ingeniero de IA — Fine-tuning de LLM',
