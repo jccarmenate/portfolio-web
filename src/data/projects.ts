@@ -69,7 +69,8 @@ export const projects: Project[] = [
       en: 'Real-time UNIX security monitor: USB device forensics with snapshots and SHA-256 hashes, per-process CPU/memory anomaly detection, and a port scanner — all behind a thread-safe multi-threaded architecture with PDF report export.',
     },
     stack: ['C', 'GTK+3', 'pthreads'],
-    url: 'https://github.com/jccarmenate/MatCom-Guard-SO-Project',
+    url: 'https://github.com/jccarmenate/MatCom-Guard',
+    image: '/projects/matcom-guard.png',
   },
   {
     slug: 'population-simulation',
