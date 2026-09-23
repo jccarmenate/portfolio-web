@@ -1,7 +1,7 @@
 ---
 import { repoUrl, type Project } from '../data/projects';
 import { projectHref } from '../lib/links';
-import { t, type Lang } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
 
 interface Props {
   project: Project;
@@ -20,8 +20,9 @@ const href = external ? repoUrl(project) : projectHref(project, lang);
     href={href}
     target={external ? '_blank' : undefined}
     rel={external ? 'noopener' : undefined}
+    aria-describedby={external ? 'new-tab-note' : undefined}
     class="outline-none after:absolute after:inset-0 after:rounded-2xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-(--focus)"
   >
-    {project.title}{external && <span class="sr-only"> — GitHub {t(lang).a11y.newTab}</span>}
+    {project.title}{external && <span class="sr-only"> — GitHub</span>}
   </a>
 </Heading>

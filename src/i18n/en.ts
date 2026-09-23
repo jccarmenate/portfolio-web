@@ -81,6 +81,9 @@ export const en: typeof es = {
     highlights: 'At a glance',
     openImage: 'Open full-size image',
     next: 'Next case study',
+    breadcrumb: 'Breadcrumb',
+    caseStudyLabel: 'Case study',
+    onThisPage: 'On this page',
   },
   experience: {
     work: 'Experience',

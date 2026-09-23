@@ -301,8 +301,8 @@ export const projects: Project[] = [
             en: 'RAG answer panel with numbered citations and the linked source list.',
           },
           caption: {
-            es: 'La respuesta cita cada afirmación y señala cuándo las fuentes no cubren la pregunta.',
-            en: "The answer cites each claim and flags when sources don't cover the question.",
+            es: 'La respuesta enlaza sus fuentes con citas numeradas y avisa cuando no cubren la pregunta.',
+            en: "The answer links its sources with numbered citations and says when they don't cover the question.",
           },
         },
       ],

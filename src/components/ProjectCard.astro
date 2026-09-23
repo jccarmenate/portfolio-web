@@ -19,10 +19,10 @@ const { project, lang, headingLevel = 'h3' } = Astro.props;
   class="group relative isolate flex flex-col rounded-2xl border border-line bg-surface/60 p-3 transition duration-300 focus-within:-translate-y-0.5 focus-within:border-emerald-500/40 hover:-translate-y-0.5 hover:border-emerald-500/40 motion-reduce:transform-none max-sm:grid max-sm:grid-cols-[116px_1fr] max-sm:items-start max-sm:gap-4"
 >
   <ProjectPreview project={project} lang={lang} variant="card" />
-  <div class="flex flex-1 flex-col px-3 pt-4 pb-3 max-sm:h-full max-sm:p-0">
+  <div class="flex min-w-0 flex-1 flex-col px-3 pt-4 pb-3 max-sm:h-full max-sm:p-0">
     <ProjectTitle project={project} lang={lang} level={headingLevel} class="text-lg max-sm:text-base" />
     <p class="mt-2 line-clamp-3 text-sm leading-6 text-ink-muted max-sm:line-clamp-2">{project.summary[lang]}</p>
-    <ProjectChips project={project} lang={lang} class="mt-4 max-sm:hidden" />
+    <ProjectChips project={project} lang={lang} class="mt-4 max-sm:mt-2" techClass="max-sm:hidden" />
     <ProjectLinks project={project} lang={lang} />
   </div>
 </article>

@@ -11,7 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 const dict = t(lang);
 ---
-<section id="services" aria-labelledby="services-title" class="container-page py-20 md:py-28">
+<section id="services" aria-labelledby="services-title" class="container-page pb-20 md:pb-28">
   <SectionHeading id="services-title" title={dict.sections.services} intro={dict.sections.servicesIntro} />
   <dl class="divide-y divide-line border-y border-line">
     {services.map((service) => {

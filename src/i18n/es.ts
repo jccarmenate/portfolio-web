@@ -80,6 +80,9 @@ export const es = {
     highlights: 'En pocas palabras',
     openImage: 'Abrir imagen a tamaño completo',
     next: 'Siguiente caso de estudio',
+    breadcrumb: 'Ruta de navegación',
+    caseStudyLabel: 'Caso de estudio',
+    onThisPage: 'En esta página',
   },
   experience: {
     work: 'Experiencia',

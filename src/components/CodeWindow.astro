@@ -22,9 +22,8 @@ const items = snippets.map((snippet: Snippet) => {
   const project = projectBySlug(snippet.project)!;
   return {
     ...snippet,
-    label: `${snippet.project}/${snippet.file}`,
+    label: snippet.file,
     href: projectHref(project, lang),
-    title: project.title,
   };
 });
 const first = items[0];
@@ -52,9 +51,9 @@ const first = items[0];
         href={first.href}
         class="ml-auto inline-flex shrink-0 items-center gap-1 font-mono text-[11px] text-neutral-400 transition hover:text-emerald-400"
       >
-        {dict.code.viewProject}
+        <span class="sr-only">{dict.code.viewProject}: </span>
+        <span data-code-title>{first.short}</span>
         <Icon name="arrow-up-right" class="size-3" />
-        <span data-code-title class="sr-only">: {first.title}</span>
       </a>
       <button
         type="button"
@@ -68,7 +67,7 @@ const first = items[0];
       </button>
     </div>
     <p class="sr-only">{dict.code.summary}</p>
-    <div class="h-48 overflow-hidden px-4 py-4 font-mono text-[12.5px] leading-[1.75] sm:text-[13px]">
+    <div class="h-52 overflow-hidden px-4 py-4 font-mono text-xs leading-[1.75]">
       <pre data-code-body aria-hidden="true" class="whitespace-pre-wrap">{
         first.lines.map((line, i) => (
           <Fragment>
@@ -114,7 +113,7 @@ const first = items[0];
   interface Item {
     label: string;
     href: string;
-    title: string;
+    short: string;
     language: string;
     lines: Tok[][];
   }
@@ -159,7 +158,7 @@ const first = items[0];
     function show(item: Item, index: number) {
       label.textContent = item.label;
       link.href = item.href;
-      title.textContent = `: ${item.title}`;
+      title.textContent = item.short;
       language.textContent = item.language;
       dots.forEach((dot, i) => {
         const active = i === index;

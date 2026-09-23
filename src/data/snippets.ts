@@ -4,6 +4,8 @@ export type Token = [text: string, kind: TokenKind];
 export interface Snippet {
   /** Project slug (see projects.ts) the snippet comes from. */
   project: string;
+  /** Short project name for the window's link. */
+  short: string;
   file: string;
   language: string;
   lines: Token[][];
@@ -13,6 +15,7 @@ export interface Snippet {
 export const snippets: Snippet[] = [
   {
     project: 'tech-rag',
+    short: 'Tech RAG',
     file: 'retriever.py',
     language: 'python',
     lines: [
@@ -26,6 +29,7 @@ export const snippets: Snippet[] = [
   },
   {
     project: 'multiagent-code-generator',
+    short: 'Multiagent',
     file: 'graph.py',
     language: 'python',
     lines: [
@@ -38,12 +42,14 @@ export const snippets: Snippet[] = [
   },
   {
     project: 'guildwork',
+    short: 'GuildWork',
     file: 'auth.ts',
     language: 'typescript',
     lines: [
       [['function ', 'kw'], ['rotateToken', 'fn'], ['(old: string) {', 'text']],
       [['  const p = ', 'text'], ['verify', 'fn'], ['(old, SECRET)', 'text']],
-      [['  ', 'text'], ['if ', 'kw'], ['(isRevoked(p.jti)) ', 'text'], ['throw ', 'kw'], ['new AuthError(', 'text'], ['"reuse"', 'str'], [')', 'text']],
+      [['  ', 'text'], ['if ', 'kw'], ['(isRevoked(p.jti))', 'text']],
+      [['    ', 'text'], ['throw ', 'kw'], ['new AuthError(', 'text'], ['"reuse"', 'str'], [')', 'text']],
       [['  revoke(p.jti)', 'text']],
       [['  ', 'text'], ['return ', 'kw'], ['issuePair(p.userId)', 'text']],
       [['}', 'text']],
@@ -51,6 +57,7 @@ export const snippets: Snippet[] = [
   },
   {
     project: 'captive-portal',
+    short: 'Captive Portal',
     file: 'portal.py',
     language: 'python',
     lines: [
@@ -63,6 +70,7 @@ export const snippets: Snippet[] = [
   },
   {
     project: 'hexarena',
+    short: 'HexArena',
     file: 'mcts.py',
     language: 'python',
     lines: [

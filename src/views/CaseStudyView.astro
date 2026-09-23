@@ -17,11 +17,13 @@ const site = Astro.site!;
 const studies = projects.filter((p) => p.caseStudy);
 const next = studies[(studies.indexOf(project) + 1) % studies.length];
 
-// Social preview cropped from the project's real cover.
-const og =
-  project.cover.kind === 'screenshot'
-    ? await getImage({ src: project.cover.src, width: 1200, height: 630, fit: 'cover', position: 'top', format: 'png' })
-    : undefined;
+// Social preview cropped from the project's real cover (1.91:1, never upscaled).
+const cover = project.cover.kind === 'screenshot' ? project.cover.src : undefined;
+const ogWidth = cover ? Math.min(1200, cover.width) : 0;
+const ogHeight = Math.round((ogWidth * 630) / 1200);
+const og = cover
+  ? await getImage({ src: cover, width: ogWidth, height: ogHeight, fit: 'cover', position: 'top', format: 'png' })
+  : undefined;
 ---
 <BaseLayout
   lang={lang}
@@ -32,6 +34,8 @@ const og =
   ogType="article"
   ogImage={og?.src}
   ogImageAlt={og ? project.cover.alt[lang] : undefined}
+  ogImageWidth={og ? ogWidth : undefined}
+  ogImageHeight={og ? ogHeight : undefined}
   structuredData={[
     {
       '@type': 'SoftwareSourceCode',
@@ -39,7 +43,7 @@ const og =
       description: project.caseStudy!.description[lang],
       url: new URL(paths.project(project.slug)[lang], site).href,
       codeRepository: repoUrl(project),
-      programmingLanguage: project.stack,
+      keywords: project.stack.join(', '),
       inLanguage: lang,
       author: { '@id': new URL('/#person', site).href },
     },

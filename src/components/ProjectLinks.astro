@@ -16,7 +16,7 @@ interface Props {
 const { project, lang } = Astro.props;
 const dict = t(lang);
 ---
-<div class="relative z-10 mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-5 text-sm font-medium">
+<div class="pointer-events-none relative z-10 mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-5 text-sm font-medium">
   {project.caseStudy ? (
     <span aria-hidden="true" class="inline-flex items-center gap-1 text-accent-ink">
       {dict.project.caseStudy}
@@ -26,7 +26,7 @@ const dict = t(lang);
       href={repoUrl(project)}
       target="_blank"
       rel="noopener"
-      class="inline-flex items-center gap-1.5 text-ink-muted transition hover:text-ink"
+      class="pointer-events-auto inline-flex items-center gap-1.5 text-ink-muted transition hover:text-ink"
     >
       <Icon name="github" class="size-3.5" />
       {dict.project.code}<span class="sr-only"> — {project.title} {dict.a11y.newTab}</span>
@@ -43,7 +43,7 @@ const dict = t(lang);
       href={project.demo}
       target="_blank"
       rel="noopener"
-      class="inline-flex items-center gap-1 text-ink-muted transition hover:text-ink"
+      class="pointer-events-auto inline-flex items-center gap-1 text-ink-muted transition hover:text-ink"
     >
       {dict.project.demo}
       <Icon name="arrow-up-right" class="size-3.5" />

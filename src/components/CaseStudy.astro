@@ -28,7 +28,7 @@ const heading = 'scroll-mt-24 text-title text-ink';
 const number = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).padStart(2, '0');
 ---
 <article class="container-page pt-10 pb-20 md:pt-14 md:pb-28">
-  <nav aria-label="Breadcrumb" class="font-mono text-xs text-ink-muted">
+  <nav aria-label={dict.project.breadcrumb} class="font-mono text-xs text-ink-muted">
     <a href={paths.projects[lang]} class="group inline-flex items-center gap-1.5 hover:text-ink">
       <Icon name="arrow-left" class="size-3.5 transition-transform group-hover:-translate-x-0.5 motion-reduce:transition-none" />
       {dict.project.back}
@@ -37,7 +37,7 @@ const number = (id: string) => String(sections.findIndex((s) => s.id === id) + 1
 
   <header class="mt-8 grid gap-6 md:grid-cols-12 md:items-end">
     <div class="md:col-span-8">
-      <p class="truncate font-mono text-xs text-ink-muted">{project.repo}</p>
+      <p class="font-mono text-eyebrow text-accent-ink uppercase">{dict.project.caseStudyLabel}</p>
       <h1 class="mt-3 text-display text-ink">{project.title}</h1>
       <p class="mt-5 max-w-[60ch] text-lead text-ink-muted">{project.summary[lang]}</p>
     </div>
@@ -60,7 +60,7 @@ const number = (id: string) => String(sections.findIndex((s) => s.id === id) + 1
   <div class="mt-14 grid gap-12 md:grid-cols-12">
     <aside class="md:col-span-4 lg:col-span-3">
       <div class="space-y-8 md:sticky md:top-24">
-        <nav aria-label={dict.project.highlights} class="hidden md:block">
+        <nav aria-label={dict.project.onThisPage} class="hidden md:block">
           <ol class="space-y-2 font-mono text-xs">
             {sections.map((s) => (
               <li>
@@ -112,8 +112,13 @@ const number = (id: string) => String(sections.findIndex((s) => s.id === id) + 1
         <h2 id="architecture" class={heading}>{dict.project.architecture}</h2>
         <p class="mt-4 max-w-[68ch] text-[17px] leading-relaxed text-ink-muted">{study.architecture[lang]}</p>
         {Diagram && study.diagram && (
-          <figure class="mt-8 overflow-hidden rounded-xl bg-neutral-950 ring-1 ring-neutral-950/10 dark:ring-white/10">
-            <Diagram role="img" aria-label={study.diagram.alt[lang]} class="diagram block h-auto w-full" />
+          <figure
+            tabindex="0"
+            role="region"
+            aria-label={study.diagram.alt[lang]}
+            class="mt-8 overflow-x-auto rounded-xl bg-neutral-950 ring-1 ring-neutral-950/10 dark:ring-white/10"
+          >
+            <Diagram role="img" aria-label={study.diagram.alt[lang]} class="diagram block h-auto w-full min-w-[680px]" />
           </figure>
         )}
         {study.table && (

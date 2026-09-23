@@ -35,7 +35,7 @@ const site = Astro.site!;
             name: project.title,
             description: project.summary[lang],
             codeRepository: repoUrl(project),
-            programmingLanguage: project.stack,
+            keywords: project.stack.join(', '),
             author: { '@id': new URL('/#person', site).href },
           },
         })),

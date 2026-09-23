@@ -21,10 +21,10 @@
 
       <rect x="390" y="40" width="180" height="80" rx="10" fill="#052e16" stroke="#34d399" stroke-width="2"/>
       <text x="406" y="72" fill="#f5f5f5" font-size="15" font-weight="700">Bayesian inference</text>
-      <text x="406" y="96" fill="#6ee7b7" font-size="12" class="mono">network · noisy-OR</text>
+      <text x="406" y="96" fill="#6ee7b7" font-size="12" class="mono">noisy-OR + Rocchio</text>
       <rect x="390" y="160" width="180" height="80" rx="10" fill="#171717" stroke="#34d399" stroke-width="1.5"/>
       <text x="406" y="192" fill="#f5f5f5" font-size="15" font-weight="700">Vector retriever</text>
-      <text x="406" y="216" fill="#34d399" font-size="12" class="mono">+ Rocchio/WordNet</text>
+      <text x="406" y="216" fill="#34d399" font-size="12" class="mono">sentence-transformers</text>
 
       <rect x="610" y="40" width="170" height="80" rx="10" fill="#171717" stroke="#34d399" stroke-width="1.5"/>
       <text x="626" y="72" fill="#f5f5f5" font-size="15" font-weight="700">RAG pipeline</text>

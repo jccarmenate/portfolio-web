@@ -18,27 +18,27 @@ const dict = t(lang);
 <section aria-labelledby="projects-title" class="container-page pt-14 pb-20 md:pt-20 md:pb-28">
   <SectionHeading level="h1" id="projects-title" title={dict.sections.projects} intro={dict.sections.projectsIntro} />
 
-  <div class="grid gap-6">
+  <div class="grid grid-cols-1 gap-6">
     {featuredProjects.map((project, i) => (
       <ProjectFeatured project={project} lang={lang} reverse={i % 2 === 1} headingLevel="h2" priority={i === 0} />
     ))}
   </div>
 
   <h2 id="more-projects" class="mt-20 mb-8 text-xl font-semibold tracking-tight text-ink">{dict.sections.moreProjects}</h2>
-  <div class="grid gap-6 sm:grid-cols-2">
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
     {otherProjects.map((project) => <ProjectCard project={project} lang={lang} />)}
     <a
       href={profile.contact.github}
       target="_blank"
       rel="noopener"
-      class="group flex min-h-48 flex-col items-center justify-center gap-2 rounded-2xl border border-line bg-surface p-6 text-center transition hover:border-emerald-500/40"
+      class="group flex min-h-48 flex-col items-center justify-center gap-2 rounded-2xl border border-line bg-surface p-6 text-center transition hover:border-emerald-500/40 max-sm:min-h-0 max-sm:flex-row max-sm:flex-wrap max-sm:justify-start max-sm:gap-x-3 max-sm:py-4 max-sm:text-left"
     >
       <Icon name="github" class="size-6 text-ink-muted transition group-hover:text-ink" />
       <span class="inline-flex items-center gap-1 font-mono text-sm text-ink">
         {dict.project.moreOnGithub}
         <Icon name="arrow-up-right" class="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" />
       </span>
-      <span class="text-sm text-ink-muted">{dict.project.moreOnGithubBody}</span>
+      <span class="text-sm text-ink-muted max-sm:hidden">{dict.project.moreOnGithubBody}</span>
       <span class="font-mono text-xs text-ink-muted">github.com/jccarmenate</span>
       <span class="sr-only">{dict.a11y.newTab}</span>
     </a>

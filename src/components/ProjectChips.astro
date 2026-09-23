@@ -7,9 +7,11 @@ interface Props {
   lang: Lang;
   max?: number;
   class?: string;
+  /** Extra classes for the technology chips only (the team badge stays). */
+  techClass?: string;
 }
 
-const { project, lang, max = 4, class: className } = Astro.props;
+const { project, lang, max = 4, class: className, techClass } = Astro.props;
 const shown = project.stack.slice(0, max);
 const hidden = project.stack.slice(max);
 ---
@@ -21,9 +23,9 @@ const hidden = project.stack.slice(max);
       </span>
     </li>
   )}
-  {shown.map((tech) => <li class="chip">{tech}</li>)}
+  {shown.map((tech) => <li class:list={['chip', techClass]}>{tech}</li>)}
   {hidden.length > 0 && (
-    <li class="chip" title={hidden.join(', ')}>
+    <li class:list={['chip', techClass]}>
       +{hidden.length}<span class="sr-only">: {hidden.join(', ')}</span>
     </li>
   )}
