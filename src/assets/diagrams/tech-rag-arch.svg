@@ -7,7 +7,7 @@
   <g>
     <g class="mono" font-size="12" fill="#a3a3a3">
       <rect x="20" y="40" width="120" height="200" rx="10" fill="#171717" stroke="#525252"/>
-      <text x="36" y="66" fill="#f5f5f5" font-size="14" font-weight="700">5 sources</text>
+      <text x="36" y="66" fill="#f5f5f5" font-size="14" font-weight="700">5 APIs</text>
       <text x="36" y="96">GitHub</text><text x="36" y="120">Hacker News</text><text x="36" y="144">Dev.to</text><text x="36" y="168">StackExchange</text><text x="36" y="192">arXiv</text>
       <text x="36" y="222" fill="#737373">APScheduler</text>
     </g>
@@ -31,11 +31,11 @@
       <text x="626" y="96" fill="#34d399" font-size="12" class="mono">Ollama | Anthropic</text>
       <rect x="610" y="160" width="170" height="80" rx="10" fill="#171717" stroke="#34d399" stroke-width="1.5"/>
       <text x="626" y="192" fill="#f5f5f5" font-size="15" font-weight="700">Ranker</text>
-      <text x="626" y="216" fill="#34d399" font-size="12" class="mono">+ user feedback</text>
+      <text x="626" y="216" fill="#34d399" font-size="12" class="mono">+ feedback</text>
 
       <rect x="390" y="280" width="390" height="56" rx="10" fill="#171717" stroke="#525252"/>
       <text x="406" y="314" fill="#f5f5f5" font-size="15" font-weight="700">FastAPI → React SPA</text>
-      <text x="580" y="314" fill="#a3a3a3" font-size="12" class="mono">cited answers</text>
+      <text x="580" y="314" fill="#a3a3a3" font-size="12" class="mono">[1] [2] [3]</text>
     </g>
     <g stroke="#34d399" stroke-width="1.6" fill="none" marker-end="url(#tr-a)">
       <path d="M142 90H176"/><path d="M142 190H176"/>

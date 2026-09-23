@@ -33,7 +33,7 @@ export const profile: Profile = {
   skills: [
     {
       category: { es: 'IA / ML', en: 'AI / ML' },
-      items: ['LLM Fine-tuning', 'RAG', 'LangGraph', 'LangChain', 'ChromaDB', 'CLIP', 'Ollama', 'Anthropic API', 'Google ADK'],
+      items: ['LLM fine-tuning', 'RAG', 'LangGraph', 'LangChain', 'ChromaDB', 'CLIP', 'Ollama', 'Anthropic API', 'Google ADK'],
     },
     {
       category: { es: 'Backend', en: 'Backend' },

@@ -36,10 +36,8 @@ export const es = {
     role: 'Backend & AI Engineer',
     lead: 'Construyo backends en Python y sistemas con LLMs: RAG, agentes y fine-tuning.',
     credential: 'He pasado 10 meses ajustando un LLM en producción para automatizar el inventario de una empresa.',
-    meta: [
-      'CC · último año · MatCom, Universidad de La Habana · graduación jul. 2027',
-      'La Habana, Cuba · Español nativo · Inglés B2',
-    ],
+    degree: 'Ciencias de la Computación · último año · Universidad de La Habana (MatCom)',
+    facts: ['Graduación jul. 2027', 'La Habana, Cuba'],
     ctaProjects: 'Ver proyectos',
     ctaCv: 'Descargar CV',
     stackLabel: 'stack principal',

@@ -36,7 +36,7 @@ export const experience: TimelineEntry[] = [
         'Evaluated the model against real inventory queries, iterating on data and hyperparameters until reaching quality the team could actually use.',
       ],
     },
-    tags: ['Python', 'Fine-tuning LLM', 'NLP'],
+    tags: ['Python', 'LLM fine-tuning', 'NLP'],
   },
   {
     kind: 'education',

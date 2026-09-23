@@ -224,8 +224,8 @@ export const projects: Project[] = [
         en: 'Tech RAG: a RAG search engine built from scratch with a Bayesian inference network, ChromaDB and cited answers. Evaluated with MAP and nDCG; 120+ tests.',
       },
       problem: {
-        es: 'Responder preguntas técnicas con información actual de GitHub, Hacker News, Stack Overflow, Dev.to y arXiv, citando siempre las fuentes. Es un proyecto personal para construir desde cero cada módulo de un sistema de recuperación de información (adquisición, indexado, recuperación, ranking, RAG y evaluación) sin frameworks de orquestación.',
-        en: 'Answer technical questions with current information from GitHub, Hacker News, Stack Overflow, Dev.to and arXiv, always citing sources. A personal project to build every module of an information retrieval system (acquisition, indexing, retrieval, ranking, RAG and evaluation) from scratch, with no orchestration framework.',
+        es: 'Responder preguntas técnicas con información actual de GitHub, Hacker News, StackExchange, Dev.to y arXiv, citando siempre las fuentes. Es un proyecto personal para construir desde cero cada módulo de un sistema de recuperación de información (adquisición, indexado, recuperación, ranking, RAG y evaluación) sin frameworks de orquestación.',
+        en: 'Answer technical questions with current information from GitHub, Hacker News, StackExchange, Dev.to and arXiv, always citing sources. A personal project to build every module of an information retrieval system (acquisition, indexing, retrieval, ranking, RAG and evaluation) from scratch, with no orchestration framework.',
       },
       architecture: {
         es: 'Conectores a 5 APIs, refrescados con APScheduler, alimentan SQLite, un índice invertido propio con TF-IDF y ChromaDB con embeddings. Dos recuperadores (una red de inferencia bayesiana y uno vectorial) alimentan un ranker (relevancia, recencia, autoridad y feedback) y el pipeline RAG, que genera respuestas citadas con Ollama o Anthropic. FastAPI sirve una SPA en React; CLIP añade búsqueda de imágenes.',

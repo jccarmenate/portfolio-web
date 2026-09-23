@@ -38,10 +38,8 @@ export const en: typeof es = {
     role: 'Backend & AI Engineer',
     lead: 'I build Python backends and LLM systems: RAG, agents and fine-tuning.',
     credential: "I spent 10 months fine-tuning an LLM in production to automate a company's inventory.",
-    meta: [
-      'CS · final year · University of Havana (MatCom) · graduating Jul 2027',
-      'Havana, Cuba · Spanish (native) · English (B2)',
-    ],
+    degree: 'Computer Science · final year · University of Havana (MatCom)',
+    facts: ['Graduating Jul 2027', 'Havana, Cuba'],
     ctaProjects: 'View projects',
     ctaCv: 'Download CV',
     stackLabel: 'core stack',
