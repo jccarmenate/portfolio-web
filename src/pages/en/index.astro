@@ -1,15 +1,4 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import ExperienceTimeline from '../../components/ExperienceTimeline.astro';
-import ServicesSection from '../../components/ServicesSection.astro';
-import { profile } from '../../data/profile';
-
-const lang = 'en' as const;
-const title = `${profile.name} — Backend Engineer & AI Engineer`;
+import HomeView from '../../views/HomeView.astro';
 ---
-<BaseLayout lang={lang} title={title} description={profile.bio[lang]}>
-  <Hero lang={lang} />
-  <ExperienceTimeline lang={lang} />
-  <ServicesSection lang={lang} />
-</BaseLayout>
+<HomeView lang="en" />

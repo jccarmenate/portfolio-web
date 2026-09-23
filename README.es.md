@@ -3,80 +3,96 @@
 🇪🇸 Español (estás aquí) · 🇬🇧 [Read in English](README.md)
 
 Sitio personal de Juan Carlos, estudiante de último año de Ciencias de la
-Computación enfocado en sistemas de IA agéntica, recuperación de
-información y desarrollo full-stack. Bilingüe (español por defecto en
-`/`, inglés en `/en/`), construido con Astro y Tailwind CSS.
+Computación que busca roles de Backend Engineer / AI Engineer. Bilingüe
+(español por defecto en `/`, inglés en `/en/`), construido con Astro y
+Tailwind CSS.
 
 **Repositorio:** https://github.com/jccarmenate/portfolio-web
 
 ## Características
 
-- **Enrutado bilingüe** — i18n nativo de Astro (`/` español, `/en/`
-  inglés), incluyendo una página de proyectos dedicada por idioma
-  (`/proyectos`, `/en/projects`).
-- **Modo oscuro** — basado en clase, persistido en `localStorage`,
-  aplicado antes del primer render con un script bloqueante (sin flash
-  del tema incorrecto).
-- **Panel de terminal en el hero** — un panel estilo `whoami.sh` que
-  escribe fragmentos de código reales y cortos, tomados de los proyectos
-  destacados abajo (recuperación Bayesiana, orquestación de agentes,
-  rotación de JWT, autenticación PBKDF2, MCTS), en vez de una foto o una
-  animación genérica.
-- **Tarjetas de proyecto con hover "boceto"** — un contorno de borde
-  punteado que se desplaza al pasar el mouse, hecho con transforms CSS
-  en capas.
-- **Descarga de CV** — link a PDF según el idioma (español/inglés),
-  siempre visible junto al botón de menú móvil, no escondido dentro del
-  nav.
-- **SEO básico** — URLs canónicas, meta tags Open Graph + Twitter Card con
-  una imagen de social preview generada (1200×630), y sitemap automático
-  (`@astrojs/sitemap`) + `robots.txt`.
+- **Home pensada para reclutadores** — nombre y rol en el `h1`, un pitch de
+  dos líneas, datos clave (carrera, fecha de graduación, ubicación, idiomas)
+  y dos CTAs (proyectos y CV), todo visible sin hacer scroll en un móvil. El
+  CV queda siempre a un clic en la navegación fija.
+- **Presentación de proyectos** — todas las vistas previas usan el mismo
+  marco de "ventana": capturas reales de cada repo (recortes 16:10 servidos
+  como AVIF/WebP con `astro:assets`) o diagramas SVG incrustados, hechos a
+  partir de las notas de arquitectura del propio README y marcados como
+  diagramas. Los proyectos destacados van en formato ancho; el resto pasa a
+  filas con miniatura en móvil.
+- **Casos de estudio** — `/proyectos/<slug>/` y `/en/projects/<slug>/` para
+  los tres proyectos destacados: problema, arquitectura, decisiones clave,
+  validación y galería, todo sacado de los README de los repos.
+- **Ventana de código en el hero** — escribe fragmentos cortos de los
+  proyectos y enlaza cada uno a su proyecto. El primer fragmento se renderiza
+  en el servidor; el tecleo se pausa fuera de pantalla, en pestañas en
+  segundo plano, a demanda y con movimiento reducido.
+- **Enrutado bilingüe bien hecho** — un único mapa de rutas
+  (`src/i18n/paths.mjs`) genera las URLs canónicas, los `hreflang`
+  (es/en/x-default), el sitemap y el cambio de idioma, que siempre lleva a la
+  página equivalente.
+- **Sistema de diseño** — Geist + Geist Mono (autoalojadas con la Fonts API
+  de Astro), tokens de color semánticos para claro/oscuro con contraste AA,
+  modo oscuro por clase aplicado antes del primer render.
+- **SEO y accesibilidad** — título y descripción por página, imágenes Open
+  Graph por idioma y por caso de estudio, JSON-LD, 404 bilingüe, skip link,
+  menú móvil accesible y tarjetas con enlace estirado y encabezados reales.
 
 ## Stack técnico
 
-- **Astro** + **TypeScript** (strict), salida estática
+- **Astro 7** + **TypeScript** (strict), salida estática
 - **Tailwind CSS v4** vía `@tailwindcss/vite`
-- Sin framework de UI, sin librería de estado en el cliente — componentes
-  `.astro` planos y un puñado de interacciones pequeñas en JS vanilla
-  (toggle de tema, nav móvil, tipeo del panel del hero)
+- Sin framework de UI ni librería de estado en el cliente — componentes
+  `.astro` y unas pocas interacciones en JS vanilla (tema, navegación móvil,
+  ventana de código, copiar email)
 
 ## Cómo empezar
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Abre http://localhost:4321
+Abre http://localhost:4321 (las URLs llevan barra final, p. ej. `/proyectos/`).
 
 ## Comandos
 
 | Comando | Acción |
 |---|---|
 | `npm run dev` | Levanta el servidor de desarrollo |
+| `npm run check` | Chequeo de tipos y validación (`astro check`) |
 | `npm run build` | Build de producción a `dist/` |
 | `npm run preview` | Sirve el build de producción localmente |
-| `npx astro check` | Chequeo de tipos y validación de rutas |
+
+La CI (GitHub Actions) ejecuta `npm ci`, `npm run check` y `npm run build`
+en cada push y pull request.
 
 ## Despliegue
 
-Salida estática, desplegable en cualquier lado. En Vercel: importa este
-repositorio, el preset de framework "Astro" se detecta automáticamente y
-no hace falta configuración adicional.
+Salida estática. En Vercel el preset "Astro" se detecta automáticamente;
+`vercel.json` añade cabeceras de seguridad, caché larga para los assets con
+hash y redirecciones a la URL con barra final.
 
 ## Estructura del proyecto
 
 ```
 src/
-├── pages/            # index.astro + proyectos.astro (es); en/index.astro + en/projects.astro (en)
-├── layouts/          # BaseLayout.astro — head, script de tema, Nav + Footer
-├── components/       # secciones (Hero, ExperienceTimeline, ProjectsSection, ServicesSection)
-│                      # y piezas reutilizables (Badge, Button, AvatarFrame, toggles)
-├── data/             # contenido editable — perfil, experiencia, proyectos, servicios
-├── i18n/             # diccionarios de strings de interfaz (es/en)
-└── lib/               # utilidades puras pequeñas (iniciales, degradados de los tiles)
+├── pages/        # rutas: / y /en/, /proyectos/ y /en/projects/ (+ casos de estudio [slug]), 404, robots.txt
+├── views/        # composición de páginas compartida por ambos idiomas
+├── layouts/      # BaseLayout.astro — head (SEO, hreflang, JSON-LD), tema, Nav + Footer
+├── components/   # secciones (Hero, FeaturedProjects, ExperienceSection, …) y piezas (ProjectPreview, CodeWindow, …)
+├── data/         # contenido editable — perfil, experiencia, proyectos (+ casos de estudio), servicios, fragmentos
+├── assets/       # capturas de proyectos, diagramas SVG, fuentes autoalojadas (OFL)
+├── i18n/         # textos de interfaz (es/en) y el mapa de rutas compartido
+└── lib/          # utilidades pequeñas
 ```
+
+Para añadir un proyecto, agrégalo en `src/data/projects.ts`: su vista previa
+necesita una captura real en `src/assets/projects/` (o un diagrama en
+`src/assets/diagrams/`). Añade un `caseStudy` para darle página propia.
 
 ## Licencia
 
-MIT
+MIT. Geist y Geist Mono se distribuyen bajo la SIL Open Font License
+(`src/assets/fonts/OFL.txt`).

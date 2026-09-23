@@ -1,30 +1,101 @@
 ---
-import { gradientForIndex } from '../lib/gradient';
-import { getInitials } from '../lib/getInitials';
+import { Image, Picture } from 'astro:assets';
+import type { Project } from '../data/projects';
+import { t, type Lang } from '../i18n/ui';
+
+type Variant = 'featured' | 'card' | 'cover';
 
 interface Props {
-  title: string;
-  index: number;
-  image?: string;
+  project: Project;
+  lang: Lang;
+  variant: Variant;
+  priority?: boolean;
 }
-const { title, index, image } = Astro.props;
-const [from, to] = gradientForIndex(index);
-const initials = getInitials(title);
+
+const { project, lang, variant, priority = false } = Astro.props;
+const { cover } = project;
+const dict = t(lang);
+
+// Rendered widths measured against the layout (max-w-5xl container, 12-col
+// featured grid, 2-col card grid that becomes a 116px thumbnail row on phones).
+const layout = {
+  featured: {
+    max: 1040,
+    candidates: [520, 780, 1040],
+    sizes: '(min-width: 1024px) 528px, (min-width: 768px) 50vw, calc(100vw - 64px)',
+  },
+  card: {
+    max: 960,
+    candidates: [240, 480, 720, 960],
+    sizes: '(min-width: 1024px) 444px, (min-width: 640px) calc(50vw - 68px), 116px',
+  },
+  cover: {
+    max: 1920,
+    candidates: [640, 960, 1280, 1680, 1920],
+    sizes: '(min-width: 1024px) 960px, calc(100vw - 40px)',
+  },
+}[variant];
+
+const raster = cover.kind === 'screenshot' ? cover.src : null;
+const width = raster ? Math.min(layout.max, raster.width) : 0;
+const height = Math.round((width * 10) / 16);
+const widths = raster ? [...new Set([...layout.candidates.filter((w) => w < width), width])] : [];
+const Diagram = cover.kind === 'diagram' ? cover.src : null;
 ---
-{
-  image ? (
-    <img
-      src={image}
-      alt={title}
-      class="aspect-video w-full rounded-lg object-cover object-top"
-      loading="lazy"
-    />
-  ) : (
-    <div
-      class="flex aspect-video w-full items-center justify-center rounded-lg text-2xl font-bold text-white/90"
-      style={`background-image: linear-gradient(135deg, ${from}, ${to})`}
-    >
-      {initials}
-    </div>
-  )
-}
+<figure
+  class="overflow-hidden rounded-xl bg-neutral-950 shadow-lg ring-1 shadow-neutral-950/10 ring-neutral-950/10 dark:shadow-black/30 dark:ring-white/10"
+>
+  <div
+    aria-hidden="true"
+    class:list={[
+      'flex items-center gap-2 border-b border-white/[0.08]',
+      variant === 'card' ? 'h-[22px] px-2.5 max-sm:hidden' : 'h-7 px-3',
+    ]}
+  >
+    <span class="flex shrink-0 gap-1.5">
+      <span class="size-2 rounded-full bg-white/20"></span>
+      <span class="size-2 rounded-full bg-white/20"></span>
+      <span class="size-2 rounded-full bg-white/20"></span>
+    </span>
+    <span class="truncate font-mono text-[11px] text-neutral-400">{project.repo}</span>
+    {cover.kind === 'diagram' && (
+      <span class="ml-auto shrink-0 rounded-full border border-white/15 px-1.5 font-mono text-[10px] tracking-wider text-neutral-400 uppercase">
+        {dict.project.diagram}
+      </span>
+    )}
+  </div>
+  <div class="aspect-[16/10] overflow-hidden bg-neutral-900">
+    {raster && (
+      <Picture
+        src={raster}
+        alt={cover.alt[lang]}
+        formats={['avif']}
+        fallbackFormat="webp"
+        width={width}
+        height={height}
+        fit="cover"
+        position="left top"
+        widths={widths}
+        sizes={layout.sizes}
+        priority={priority}
+        class="size-full object-cover object-left-top transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none"
+      />
+    )}
+    {cover.kind === 'vector' && (
+      <Image
+        src={cover.src}
+        alt={cover.alt[lang]}
+        format="svg"
+        loading={priority ? 'eager' : 'lazy'}
+        class="size-full bg-[#0a0a0f] object-contain transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none"
+      />
+    )}
+    {Diagram && (
+      <Diagram
+        role="img"
+        aria-label={cover.alt[lang]}
+        class="diagram block size-full transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none"
+      />
+    )}
+  </div>
+</figure>

@@ -1,0 +1,48 @@
+---
+import { getImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CaseStudy from '../components/CaseStudy.astro';
+import { projects, repoUrl, type Project } from '../data/projects';
+import { paths, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+const { project, lang } = Astro.props;
+const { meta } = t(lang);
+const site = Astro.site!;
+
+const studies = projects.filter((p) => p.caseStudy);
+const next = studies[(studies.indexOf(project) + 1) % studies.length];
+
+// Social preview cropped from the project's real cover.
+const og =
+  project.cover.kind === 'screenshot'
+    ? await getImage({ src: project.cover.src, width: 1200, height: 630, fit: 'cover', position: 'top', format: 'png' })
+    : undefined;
+---
+<BaseLayout
+  lang={lang}
+  title={`${project.title} — ${meta.caseStudySuffix}`}
+  description={project.caseStudy!.description[lang]}
+  alternates={paths.project(project.slug)}
+  current="projects"
+  ogType="article"
+  ogImage={og?.src}
+  ogImageAlt={og ? project.cover.alt[lang] : undefined}
+  structuredData={[
+    {
+      '@type': 'SoftwareSourceCode',
+      name: project.title,
+      description: project.caseStudy!.description[lang],
+      url: new URL(paths.project(project.slug)[lang], site).href,
+      codeRepository: repoUrl(project),
+      programmingLanguage: project.stack,
+      inLanguage: lang,
+      author: { '@id': new URL('/#person', site).href },
+    },
+  ]}
+>
+  <CaseStudy project={project} next={next} lang={lang} />
+</BaseLayout>

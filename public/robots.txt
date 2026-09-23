@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://portfolio-web-eight-rose.vercel.app/sitemap-index.xml

@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { projects, repoUrl } from '../data/projects';
+import { paths, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const { meta } = t(lang);
+const site = Astro.site!;
+---
+<BaseLayout
+  lang={lang}
+  title={meta.projects.title}
+  description={meta.projects.description}
+  alternates={paths.projects}
+  current="projects"
+  structuredData={[
+    {
+      '@type': 'CollectionPage',
+      url: new URL(paths.projects[lang], site).href,
+      name: meta.projects.title,
+      inLanguage: lang,
+      isPartOf: { '@id': new URL('/#website', site).href },
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: projects.map((project, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'SoftwareSourceCode',
+            name: project.title,
+            description: project.summary[lang],
+            codeRepository: repoUrl(project),
+            programmingLanguage: project.stack,
+            author: { '@id': new URL('/#person', site).href },
+          },
+        })),
+      },
+    },
+  ]}
+>
+  <ProjectsSection lang={lang} />
+  <ContactSection lang={lang} />
+</BaseLayout>

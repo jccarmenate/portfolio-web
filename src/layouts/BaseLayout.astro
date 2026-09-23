@@ -1,19 +1,77 @@
 ---
 import '../styles/global.css';
-import DotGridBackground from '../components/DotGridBackground.astro';
+import { Font } from 'astro:assets';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import type { Lang } from '../i18n/ui';
+import { profile } from '../data/profile';
+import { langs, otherLang, t, type Lang, type Localized } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
   title: string;
   description: string;
+  /** This page's URL in every locale (see `paths` in i18n/ui.ts). */
+  alternates: Localized;
+  /** Which top-level nav item is the current page. */
+  current?: 'home' | 'projects';
+  /** Absolute or root-relative URL of a 1200×630 social preview. */
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  /** Extra schema.org nodes merged into the page's JSON-LD graph. */
+  structuredData?: Record<string, unknown>[];
 }
-const { lang, title, description } = Astro.props;
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
-const ogImageUrl = new URL('/og-image.png', Astro.site);
-const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
+
+const {
+  lang,
+  title,
+  description,
+  alternates,
+  current,
+  ogImage = `/og-image-${lang}.png`,
+  ogImageAlt,
+  ogType = 'website',
+  noindex = false,
+  structuredData = [],
+} = Astro.props;
+
+const dict = t(lang);
+const site = Astro.site!;
+const canonicalUrl = new URL(alternates[lang], site);
+const ogImageUrl = new URL(ogImage, site);
+const ogLocale = { es: 'es_ES', en: 'en_US' } as const;
+
+const personId = new URL('/#person', site).href;
+const websiteId = new URL('/#website', site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      url: site.href,
+      name: profile.name,
+      inLanguage: ['es', 'en'],
+      publisher: { '@id': personId },
+    },
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: profile.fullName,
+      alternateName: profile.name,
+      url: site.href,
+      jobTitle: 'Backend & AI Engineer',
+      description: profile.bio[lang],
+      email: `mailto:${profile.contact.email}`,
+      sameAs: [profile.contact.github, profile.contact.linkedin].filter(Boolean),
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universidad de La Habana', sameAs: 'https://www.uh.cu' },
+      address: { '@type': 'PostalAddress', addressLocality: 'La Habana', addressCountry: 'CU' },
+      knowsAbout: profile.coreStack,
+    },
+    ...structuredData,
+  ],
+};
 ---
 <!doctype html>
 <html lang={lang}>
@@ -22,40 +80,64 @@ const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {!noindex && langs.map((l) => <link rel="alternate" hreflang={l} href={new URL(alternates[l], site)} />)}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(alternates.en, site)} />}
 
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Juan Carlos" />
-    <meta property="og:locale" content={ogLocale} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <Font cssVariable="--font-geist" preload />
+    <Font cssVariable="--font-geist-mono" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:locale" content={ogLocale[lang]} />
+    <meta property="og:locale:alternate" content={ogLocale[otherLang(lang)]} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt ?? dict.meta.ogAlt} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt ?? dict.meta.ogAlt} />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
     <script is:inline>
-      if (
-        localStorage.getItem('theme') === 'dark' ||
-        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-      ) {
-        document.documentElement.classList.add('dark');
-      }
+      (() => {
+        let stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch {}
+        const dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (dark) {
+          document.documentElement.classList.add('dark');
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0d1110');
+        }
+      })();
     </script>
   </head>
-  <body class="relative bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
-    <DotGridBackground />
-    <div class="relative z-10">
-      <Nav lang={lang} />
-      <main>
-        <slot />
-      </main>
-      <Footer lang={lang} />
-    </div>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-md focus:bg-neutral-950 focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
+    >
+      {dict.a11y.skip}
+    </a>
+    <Nav lang={lang} alternates={alternates} current={current} />
+    <main id="main" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+    <Footer lang={lang} />
   </body>
 </html>

@@ -1,0 +1,23 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { profile } from '../data/profile';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+<section id="stack" aria-labelledby="stack-title" class="container-page py-20 md:py-28">
+  <SectionHeading id="stack-title" title={t(lang).sections.stack} />
+  <div class="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+    {profile.skills.map((group) => (
+      <div class="bg-canvas p-6">
+        <h3 class="font-mono text-eyebrow text-ink-muted uppercase">{group.category[lang]}</h3>
+        <ul class="mt-4 flex flex-wrap gap-1.5">
+          {group.items.map((item) => <li class="chip">{item}</li>)}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>

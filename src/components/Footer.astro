@@ -1,20 +1,18 @@
 ---
 import { profile } from '../data/profile';
-import type { Lang } from '../i18n/ui';
-import { es } from '../i18n/es';
-import { en } from '../i18n/en';
+import { t, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
-const dict = lang === 'es' ? es : en;
 const year = new Date().getFullYear();
 ---
-<footer class="mx-auto flex max-w-4xl flex-col items-center gap-4 px-7 py-10 text-sm text-neutral-500 lg:px-0 dark:text-neutral-400">
-  <div class="flex gap-4">
-    <a href={`mailto:${profile.contact.email}`} class="hover:text-emerald-400">{profile.contact.email}</a>
-    <a href={profile.contact.github} target="_blank" rel="noopener" class="hover:text-emerald-400">GitHub</a>
+<footer class="border-t border-line">
+  <div class="container-page flex flex-col gap-2 py-8 font-mono text-xs text-ink-muted sm:flex-row sm:items-center sm:justify-between">
+    <p>
+      <span aria-hidden="true">&lt;JC/&gt; · </span>{profile.name} · {year}
+    </p>
+    <p>{t(lang).footer.builtWith}</p>
   </div>
-  <p>{profile.name} — {dict.footer.rights} © {year}</p>
 </footer>

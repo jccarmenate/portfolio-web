@@ -2,44 +2,139 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  /* --font-geist / --font-geist-mono are defined by Astro's <Font> component. */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --text-display: clamp(2.75rem, 1.6rem + 4.2vw, 4.5rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.04em;
+  --text-display--font-weight: 650;
+  --text-title: clamp(1.625rem, 1.3rem + 1.2vw, 2.125rem);
+  --text-title--line-height: 1.15;
+  --text-title--letter-spacing: -0.03em;
+  --text-title--font-weight: 600;
+  --text-lead: clamp(1.0625rem, 0.98rem + 0.35vw, 1.25rem);
+  --text-lead--line-height: 1.6;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1rem;
+  --text-eyebrow--letter-spacing: 0.12em;
+}
+
+/*
+ * Semantic color tokens: one place for light and dark.
+ * - accent:     green as a fill (buttons, dots, cursor) or on dark surfaces.
+ * - accent-ink: green as text on the page background (AA in both themes).
+ * - ink-subtle: never for text under 14px on `surface`.
+ */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+}
+
+:root {
+  --canvas: #ffffff;
+  --surface: var(--color-neutral-50);
+  --ink: var(--color-neutral-950);
+  --ink-muted: var(--color-neutral-600);
+  --ink-subtle: var(--color-neutral-500);
+  --line: var(--color-neutral-200);
+  --accent: var(--color-emerald-400);
+  --accent-ink: var(--color-emerald-700);
+  --focus: var(--color-emerald-600);
+  color-scheme: light;
+}
+
+.dark {
+  --canvas: oklch(0.155 0.007 170);
+  --surface: oklch(0.19 0.009 170);
+  --ink: oklch(0.97 0.003 170);
+  --ink-muted: var(--color-neutral-400);
+  --ink-subtle: oklch(0.66 0.01 170);
+  --line: oklch(1 0 0 / 0.09);
+  --accent: var(--color-emerald-400);
+  --accent-ink: var(--color-emerald-400);
+  --focus: var(--color-emerald-400);
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: --alpha(var(--color-emerald-400) / 30%);
+  }
+}
+
 @layer components {
-  .gradient-text {
-    background-image: linear-gradient(135deg, #a3e635 0%, #34d399 35%, #14b8a6 65%, #0891b2 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .container-page {
+    @apply mx-auto w-full max-w-5xl px-5 sm:px-8;
   }
 
-  .gradient-border {
-    position: relative;
-  }
-  .gradient-border::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 2px;
-    background: linear-gradient(135deg, #a3e635 0%, #34d399 35%, #14b8a6 65%, #0891b2 100%);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+  .eyebrow {
+    @apply font-mono text-eyebrow text-accent-ink uppercase;
   }
 
-  .dot-grid {
-    position: relative;
+  .chip {
+    @apply inline-flex items-center rounded-md border border-line bg-surface px-2 py-0.5 font-mono text-xs text-ink-muted;
   }
-  .dot-grid::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(currentColor 1px, transparent 1%);
-    background-size: 50px 50px;
-    color: var(--color-neutral-300);
-    opacity: 0.5;
-    pointer-events: none;
+
+  /* Dot grid behind the hero only, faded out with a radial mask. */
+  .hero-grid {
+    background-image: radial-gradient(var(--line) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
   }
-  .dark .dot-grid::before {
-    color: var(--color-neutral-800);
+  .dark .hero-grid {
+    background-image: radial-gradient(oklch(1 0 0 / 0.08) 1px, transparent 1px);
   }
+
+  /* Entrance for secondary hero elements only: never on the h1 (LCP). */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      animation-delay: calc(var(--i, 0) * 60ms);
+    }
+  }
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  /* Syntax colors for the hero code window (always on a dark surface). */
+  .tok-kw {
+    color: var(--color-emerald-400);
+  }
+  .tok-fn {
+    color: var(--color-neutral-100);
+  }
+  .tok-str {
+    color: var(--color-teal-300);
+  }
+  .tok-text {
+    color: var(--color-neutral-400);
+  }
+}
+
+/* Inline diagram SVGs inherit Geist; their monospace labels opt into Geist Mono. */
+.diagram .mono {
+  font-family: var(--font-mono);
 }

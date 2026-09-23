@@ -1,22 +1,103 @@
-export const en = {
+import type { es } from './es';
+
+export const en: typeof es = {
+  meta: {
+    home: {
+      title: 'Juan Carlos — Backend & AI Engineer',
+      description:
+        'Backend & AI Engineer based in Havana, Cuba. Python, FastAPI, RAG, LangGraph agents and LLM fine-tuning. Final-year CS student (University of Havana).',
+    },
+    projects: {
+      title: 'Projects — Juan Carlos · Backend & AI Engineer',
+      description:
+        '8 projects with code on GitHub: a from-scratch RAG system, a LangGraph multi-agent code generator, role-based JWT auth, P2P networking and more.',
+    },
+    caseStudySuffix: 'Case study · Juan Carlos',
+    ogAlt: 'Juan Carlos — Backend & AI Engineer',
+  },
+  a11y: {
+    skip: 'Skip to content',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    darkMode: 'Dark mode',
+    newTab: '(opens in a new tab)',
+    home: 'Juan Carlos — home',
+    mainNav: 'Main',
+    switchLang: '— English version',
+  },
   nav: {
-    home: 'Home',
-    experience: 'Experience',
     projects: 'Projects',
+    experience: 'Experience',
     services: 'Services',
-    cv: 'Download CV',
+    contact: 'Contact',
+    cv: 'CV',
+    cvLabel: 'Download CV (PDF)',
   },
   hero: {
-    greeting: 'Hello',
-    intro: 'my name is',
-    ctaServices: 'See my services',
+    status: 'Open to work',
+    role: 'Backend & AI Engineer',
+    lead: 'I build Python backends and LLM systems: RAG, agents and fine-tuning.',
+    credential: "I spent 10 months fine-tuning an LLM in production to automate a company's inventory.",
+    meta: [
+      'CS · final year · University of Havana (MatCom) · graduating Jul 2027',
+      'Havana, Cuba · Spanish (native) · English (B2)',
+    ],
+    ctaProjects: 'View projects',
+    ctaCv: 'Download CV',
+    stackLabel: 'core stack',
+  },
+  code: {
+    viewProject: 'view project',
+    pause: 'Pause animation',
+    summary: 'Code snippets from my projects: RAG, LangGraph, JWT rotation, captive portal and MCTS.',
   },
   sections: {
-    experience: 'Highlighted Experience',
-    projects: 'Highlighted Projects',
+    featured: 'Featured projects',
+    seeAll: 'See all {n} projects',
+    projects: 'Projects',
+    projectsIntro:
+      "All the code is on GitHub. Short on time? Start with the first three — they're the closest to Backend and AI work.",
+    moreProjects: 'More projects',
+    experience: 'Experience & education',
+    stack: 'Tech stack',
     services: 'Services',
+    servicesIntro: 'Areas where I can contribute, as part of a team or on a project basis.',
+    servicesEvidence: 'In practice:',
+  },
+  project: {
+    caseStudy: 'Read case study',
+    code: 'Code',
+    demo: 'Demo',
+    team: 'Team of {n}',
+    diagram: 'diagram',
+    moreOnGithub: 'More on GitHub',
+    moreOnGithubBody: 'All my public repositories.',
+    back: 'Back to projects',
+    codeOnGithub: 'Code on GitHub',
+    problem: 'Problem',
+    architecture: 'Architecture',
+    decisions: 'Decisions',
+    validation: 'Validation',
+    gallery: 'Gallery',
+    stack: 'Stack',
+    highlights: 'At a glance',
+    openImage: 'Open full-size image',
+    next: 'Next case study',
+  },
+  experience: {
+    work: 'Experience',
+    education: 'Education',
+  },
+  contact: {
+    eyebrow: 'Contact',
+    title: 'Hiring a Backend or AI Engineer?',
+    body: "I'm looking for my next role. If you have an opening or want to talk about one of my projects, get in touch.",
+    copy: 'Copy email',
+    copied: 'Email copied',
+    cv: 'Download CV',
+    otherCv: 'CV in Spanish (PDF)',
   },
   footer: {
-    rights: 'All rights reserved',
+    builtWith: 'Built with Astro and Tailwind',
   },
 };

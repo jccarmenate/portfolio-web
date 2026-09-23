@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { paths } from '../i18n/ui';
+---
+<BaseLayout
+  lang="es"
+  title="404 — Página no encontrada · Page not found"
+  description="La página que buscas no existe o ha cambiado de dirección."
+  alternates={paths.home}
+  noindex
+>
+  <section class="container-page py-24 md:py-32">
+    <div class="max-w-xl overflow-hidden rounded-xl bg-neutral-950 font-mono text-[13px] leading-relaxed ring-1 ring-neutral-950/10 dark:ring-white/10">
+      <div aria-hidden="true" class="flex h-9 items-center gap-1.5 border-b border-white/[0.08] px-4">
+        <span class="size-2.5 rounded-full bg-white/20"></span>
+        <span class="size-2.5 rounded-full bg-white/20"></span>
+        <span class="size-2.5 rounded-full bg-white/20"></span>
+      </div>
+      <p class="px-4 pt-4 text-neutral-300" lang="en">
+        <span class="text-emerald-400">$</span> cd <span data-path>/…</span>
+      </p>
+      <p class="px-4 pb-4 text-neutral-400" lang="en">bash: cd: <span data-path>/…</span>: No such file or directory</p>
+    </div>
+
+    <h1 class="mt-12 text-title text-ink">Página no encontrada</h1>
+    <p lang="en" class="mt-1 text-lg text-ink-muted">Page not found</p>
+    <p class="mt-6 max-w-[52ch] text-ink-muted">
+      La página que buscas no existe o ha cambiado de dirección.
+      <span lang="en" class="mt-1 block">The page you're looking for doesn't exist or has moved.</span>
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button href={paths.home.es} icon="arrow-right">Ir al inicio</Button>
+      <Button href={paths.projects.es} variant="secondary">Ver proyectos</Button>
+    </div>
+    <p lang="en" class="mt-4 text-sm text-ink-muted">
+      <a href={paths.home.en} class="underline-offset-4 hover:text-ink hover:underline">Go home</a>
+      <span aria-hidden="true"> · </span>
+      <a href={paths.projects.en} class="underline-offset-4 hover:text-ink hover:underline">View projects</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('[data-path]').forEach((el) => {
+    el.textContent = decodeURIComponent(location.pathname);
+  });
+</script>

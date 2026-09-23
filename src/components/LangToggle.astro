@@ -1,13 +1,35 @@
 ---
-import type { Lang } from '../i18n/ui';
+import { langs, t, type Lang, type Localized } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  alternates: Localized;
 }
-const { lang } = Astro.props;
-const target = lang === 'es' ? '/en/' : '/';
-const label = lang === 'es' ? 'EN' : 'ES';
+const { lang, alternates } = Astro.props;
 ---
-<a href={target} class="text-xs font-bold uppercase tracking-widest text-neutral-700 hover:text-emerald-400 dark:text-neutral-200">
-  {label}
-</a>
+<div class="inline-flex rounded-md border border-line p-0.5 font-mono text-[11px]">
+  {langs.map((l) =>
+    l === lang ? (
+      <span class="rounded-[5px] bg-surface px-1.5 py-0.5 text-ink uppercase" aria-current="true">{l}</span>
+    ) : (
+      <a
+        href={alternates[l]}
+        hreflang={l}
+        lang={l}
+        data-lang-switch
+        class="px-1.5 py-0.5 text-ink-muted uppercase hover:text-ink"
+      >
+        {l}<span class="sr-only"> {t(l).a11y.switchLang}</span>
+      </a>
+    ),
+  )}
+</div>
+
+<script>
+  // Keep the section the reader was looking at (ids match across locales).
+  document.querySelectorAll<HTMLAnchorElement>('a[data-lang-switch]').forEach((a) => {
+    a.addEventListener('click', () => {
+      if (location.hash) a.hash = location.hash;
+    });
+  });
+</script>

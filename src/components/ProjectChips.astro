@@ -1,0 +1,30 @@
+---
+import { fmt, t, type Lang } from '../i18n/ui';
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  max?: number;
+  class?: string;
+}
+
+const { project, lang, max = 4, class: className } = Astro.props;
+const shown = project.stack.slice(0, max);
+const hidden = project.stack.slice(max);
+---
+<ul class:list={['flex flex-wrap gap-1.5', className]}>
+  {project.team && (
+    <li>
+      <span class="inline-flex items-center rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-xs text-accent-ink">
+        {fmt(t(lang).project.team, { n: project.team })}
+      </span>
+    </li>
+  )}
+  {shown.map((tech) => <li class="chip">{tech}</li>)}
+  {hidden.length > 0 && (
+    <li class="chip" title={hidden.join(', ')}>
+      +{hidden.length}<span class="sr-only">: {hidden.join(', ')}</span>
+    </li>
+  )}
+</ul>

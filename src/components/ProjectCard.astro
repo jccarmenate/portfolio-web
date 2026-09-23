@@ -1,35 +1,28 @@
 ---
-import Badge from './Badge.astro';
 import ProjectPreview from './ProjectPreview.astro';
+import ProjectTitle from './ProjectTitle.astro';
+import ProjectChips from './ProjectChips.astro';
+import ProjectLinks from './ProjectLinks.astro';
 import type { Project } from '../data/projects';
 import type { Lang } from '../i18n/ui';
 
 interface Props {
   project: Project;
   lang: Lang;
-  index: number;
+  headingLevel?: 'h2' | 'h3';
 }
-const { project, lang, index } = Astro.props;
+
+const { project, lang, headingLevel = 'h3' } = Astro.props;
 ---
-<a
-  href={project.url}
-  target="_blank"
-  rel="noopener"
-  class="group relative flex h-full flex-col items-stretch rounded-2xl p-3 duration-300 ease-out"
+<article
+  id={project.slug}
+  class="group relative isolate flex flex-col rounded-2xl border border-line bg-surface/60 p-3 transition duration-300 focus-within:-translate-y-0.5 focus-within:border-emerald-500/40 hover:-translate-y-0.5 hover:border-emerald-500/40 motion-reduce:transform-none max-sm:grid max-sm:grid-cols-[116px_1fr] max-sm:items-start max-sm:gap-4"
 >
-  <span class="absolute inset-0 z-10 block h-full w-full translate-x-1 translate-y-1 rounded-2xl border border-dashed border-neutral-300 duration-300 ease-out dark:border-neutral-600"></span>
-  <span class="absolute inset-0 z-20 block h-full w-full rounded-2xl border border-dashed border-transparent duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:border-neutral-300 group-hover:bg-white dark:group-hover:border-neutral-600 dark:group-hover:bg-neutral-950"></span>
-  <span class="relative z-30 block duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1">
-    <ProjectPreview title={project.title} index={index} image={project.image} />
-    <span class="mt-4 mb-1 flex items-center text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-      {project.title}
-      <svg class="ml-1 h-2.5 w-2.5 -translate-x-1 translate-y-1 -rotate-45 transform stroke-current opacity-0 transition-all duration-200 ease-in-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" viewBox="0 0 13 15" fill="none">
-        <path d="M5.3 0L10.8 5.5L5.3 11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
-    </span>
-    <span class="block text-sm font-light text-neutral-600 dark:text-neutral-400">{project.description[lang]}</span>
-    <span class="mt-2 flex flex-wrap">
-      {project.stack.map((tag) => <Badge label={tag} />)}
-    </span>
-  </span>
-</a>
+  <ProjectPreview project={project} lang={lang} variant="card" />
+  <div class="flex flex-1 flex-col px-3 pt-4 pb-3 max-sm:h-full max-sm:p-0">
+    <ProjectTitle project={project} lang={lang} level={headingLevel} class="text-lg max-sm:text-base" />
+    <p class="mt-2 line-clamp-3 text-sm leading-6 text-ink-muted max-sm:line-clamp-2">{project.summary[lang]}</p>
+    <ProjectChips project={project} lang={lang} class="mt-4 max-sm:hidden" />
+    <ProjectLinks project={project} lang={lang} />
+  </div>
+</article>

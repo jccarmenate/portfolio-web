@@ -1,21 +1,46 @@
 ---
+import SectionHeading from './SectionHeading.astro';
+import ProjectFeatured from './ProjectFeatured.astro';
 import ProjectCard from './ProjectCard.astro';
-import { projects } from '../data/projects';
-import type { Lang } from '../i18n/ui';
-import { es } from '../i18n/es';
-import { en } from '../i18n/en';
+import Icon from './Icon.astro';
+import { featuredProjects, otherProjects } from '../data/projects';
+import { profile } from '../data/profile';
+import { t, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
 }
+
+/** The full projects page: featured projects wide, the rest in a grid. */
 const { lang } = Astro.props;
-const dict = lang === 'es' ? es : en;
+const dict = t(lang);
 ---
-<section id="projects" class="mx-auto max-w-4xl px-7 py-10 lg:px-0">
-  <h2 class="text-2xl leading-10 font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
-    {dict.sections.projects}
-  </h2>
-  <div class="mt-7 grid w-full grid-cols-1 items-stretch gap-7 sm:grid-cols-2 md:grid-cols-3">
-    {projects.map((project, index) => <ProjectCard project={project} lang={lang} index={index} />)}
+<section aria-labelledby="projects-title" class="container-page pt-14 pb-20 md:pt-20 md:pb-28">
+  <SectionHeading level="h1" id="projects-title" title={dict.sections.projects} intro={dict.sections.projectsIntro} />
+
+  <div class="grid gap-6">
+    {featuredProjects.map((project, i) => (
+      <ProjectFeatured project={project} lang={lang} reverse={i % 2 === 1} headingLevel="h2" priority={i === 0} />
+    ))}
+  </div>
+
+  <h2 id="more-projects" class="mt-20 mb-8 text-xl font-semibold tracking-tight text-ink">{dict.sections.moreProjects}</h2>
+  <div class="grid gap-6 sm:grid-cols-2">
+    {otherProjects.map((project) => <ProjectCard project={project} lang={lang} />)}
+    <a
+      href={profile.contact.github}
+      target="_blank"
+      rel="noopener"
+      class="group flex min-h-48 flex-col items-center justify-center gap-2 rounded-2xl border border-line bg-surface p-6 text-center transition hover:border-emerald-500/40"
+    >
+      <Icon name="github" class="size-6 text-ink-muted transition group-hover:text-ink" />
+      <span class="inline-flex items-center gap-1 font-mono text-sm text-ink">
+        {dict.project.moreOnGithub}
+        <Icon name="arrow-up-right" class="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" />
+      </span>
+      <span class="text-sm text-ink-muted">{dict.project.moreOnGithubBody}</span>
+      <span class="font-mono text-xs text-ink-muted">github.com/jccarmenate</span>
+      <span class="sr-only">{dict.a11y.newTab}</span>
+    </a>
   </div>
 </section>

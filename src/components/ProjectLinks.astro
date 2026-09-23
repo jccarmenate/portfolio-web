@@ -1,0 +1,53 @@
+---
+import Icon from './Icon.astro';
+import { repoUrl, type Project } from '../data/projects';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+
+/**
+ * Action row for a project card. The card title is a stretched link to the
+ * primary destination (case study, or the repo when there is none), so the
+ * primary cue here is visual only; real links are the secondary ones.
+ */
+const { project, lang } = Astro.props;
+const dict = t(lang);
+---
+<div class="relative z-10 mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-5 text-sm font-medium">
+  {project.caseStudy ? (
+    <span aria-hidden="true" class="inline-flex items-center gap-1 text-accent-ink">
+      {dict.project.caseStudy}
+      <Icon name="arrow-right" class="size-3.5 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
+    </span>
+    <a
+      href={repoUrl(project)}
+      target="_blank"
+      rel="noopener"
+      class="inline-flex items-center gap-1.5 text-ink-muted transition hover:text-ink"
+    >
+      <Icon name="github" class="size-3.5" />
+      {dict.project.code}<span class="sr-only"> — {project.title} {dict.a11y.newTab}</span>
+    </a>
+  ) : (
+    <span aria-hidden="true" class="inline-flex items-center gap-1.5 text-accent-ink">
+      <Icon name="github" class="size-3.5" />
+      {dict.project.code}
+      <Icon name="arrow-up-right" class="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" />
+    </span>
+  )}
+  {project.demo && (
+    <a
+      href={project.demo}
+      target="_blank"
+      rel="noopener"
+      class="inline-flex items-center gap-1 text-ink-muted transition hover:text-ink"
+    >
+      {dict.project.demo}
+      <Icon name="arrow-up-right" class="size-3.5" />
+      <span class="sr-only"> — {project.title} {dict.a11y.newTab}</span>
+    </a>
+  )}
+</div>

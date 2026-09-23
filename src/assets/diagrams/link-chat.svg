@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <defs>
+    <pattern id="lc-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#262626"/>
+    </pattern>
+    <marker id="lc-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#34d399"/>
+    </marker>
+  </defs>
+  <rect width="640" height="400" fill="#0a0a0a"/>
+  <rect width="640" height="400" fill="url(#lc-dots)"/>
+  <g>
+    <!-- peers -->
+    <rect x="24" y="40" width="150" height="80" rx="12" fill="#171717" stroke="#525252" stroke-width="1.5"/>
+    <text x="44" y="78" fill="#f5f5f5" font-size="24" font-weight="700">peer A</text>
+    <text x="44" y="102" fill="#a3a3a3" font-size="13" class="mono">AF_PACKET</text>
+    <rect x="466" y="40" width="150" height="80" rx="12" fill="#171717" stroke="#525252" stroke-width="1.5"/>
+    <text x="486" y="78" fill="#f5f5f5" font-size="24" font-weight="700">peer B</text>
+    <text x="486" y="102" fill="#a3a3a3" font-size="13" class="mono">AF_PACKET</text>
+    <path d="M180 80H460" stroke="#34d399" stroke-width="2" stroke-dasharray="6 6" marker-start="url(#lc-a)" marker-end="url(#lc-a)" fill="none"/>
+    <text x="320" y="70" fill="#34d399" font-size="14" text-anchor="middle" class="mono">raw Ethernet · no server</text>
+    <!-- frame -->
+    <g class="mono" text-anchor="middle">
+      <rect x="24" y="180" width="80" height="84" rx="8" fill="#171717" stroke="#404040"/>
+      <text x="64" y="218" fill="#d4d4d4" font-size="14">DST</text><text x="64" y="240" fill="#737373" font-size="12">MAC</text>
+      <rect x="108" y="180" width="80" height="84" rx="8" fill="#171717" stroke="#404040"/>
+      <text x="148" y="218" fill="#d4d4d4" font-size="14">SRC</text><text x="148" y="240" fill="#737373" font-size="12">MAC</text>
+      <rect x="192" y="180" width="104" height="84" rx="8" fill="#052e16" stroke="#34d399" stroke-width="2"/>
+      <text x="244" y="218" fill="#34d399" font-size="18" font-weight="700">0x88B5</text><text x="244" y="240" fill="#6ee7b7" font-size="12">EtherType</text>
+      <rect x="300" y="180" width="224" height="84" rx="8" fill="#171717" stroke="#34d399" stroke-width="1.5"/>
+      <text x="412" y="218" fill="#f5f5f5" font-size="16" font-weight="700">payload</text><text x="412" y="240" fill="#6ee7b7" font-size="12">ChaCha20-Poly1305</text>
+      <rect x="528" y="180" width="88" height="84" rx="8" fill="#171717" stroke="#404040"/>
+      <text x="572" y="218" fill="#d4d4d4" font-size="14">CRC16</text><text x="572" y="240" fill="#737373" font-size="12">+ ACK</text>
+    </g>
+    <!-- mobile -->
+    <text x="24" y="324" fill="#a3a3a3" font-size="14" class="mono">mobile (Flutter)</text>
+    <text x="24" y="352" fill="#f5f5f5" font-size="18" font-weight="600">UDP discovery → TCP → X25519</text>
+  </g>
+</svg>

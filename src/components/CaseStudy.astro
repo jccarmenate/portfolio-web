@@ -1,0 +1,214 @@
+---
+import { Picture } from 'astro:assets';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import ProjectPreview from './ProjectPreview.astro';
+import { repoUrl, type Project } from '../data/projects';
+import { paths, t, fmt, type Lang } from '../i18n/ui';
+
+interface Props {
+  project: Project;
+  next: Project;
+  lang: Lang;
+}
+
+const { project, next, lang } = Astro.props;
+const study = project.caseStudy!;
+const dict = t(lang);
+const Diagram = study.diagram?.src;
+
+const sections = [
+  { id: 'problem', label: dict.project.problem },
+  { id: 'architecture', label: dict.project.architecture },
+  { id: 'decisions', label: dict.project.decisions },
+  { id: 'validation', label: dict.project.validation },
+  { id: 'gallery', label: dict.project.gallery },
+];
+const heading = 'scroll-mt-24 text-title text-ink';
+const number = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).padStart(2, '0');
+---
+<article class="container-page pt-10 pb-20 md:pt-14 md:pb-28">
+  <nav aria-label="Breadcrumb" class="font-mono text-xs text-ink-muted">
+    <a href={paths.projects[lang]} class="group inline-flex items-center gap-1.5 hover:text-ink">
+      <Icon name="arrow-left" class="size-3.5 transition-transform group-hover:-translate-x-0.5 motion-reduce:transition-none" />
+      {dict.project.back}
+    </a>
+  </nav>
+
+  <header class="mt-8 grid gap-6 md:grid-cols-12 md:items-end">
+    <div class="md:col-span-8">
+      <p class="truncate font-mono text-xs text-ink-muted">{project.repo}</p>
+      <h1 class="mt-3 text-display text-ink">{project.title}</h1>
+      <p class="mt-5 max-w-[60ch] text-lead text-ink-muted">{project.summary[lang]}</p>
+    </div>
+    <div class="flex flex-wrap gap-3 md:col-span-4 md:justify-end">
+      <Button href={repoUrl(project)} icon="arrow-up-right" external>
+        {dict.project.codeOnGithub}<span class="sr-only"> {dict.a11y.newTab}</span>
+      </Button>
+      {project.demo && (
+        <Button href={project.demo} variant="secondary" icon="arrow-up-right" external>
+          {dict.project.demo}<span class="sr-only"> {dict.a11y.newTab}</span>
+        </Button>
+      )}
+    </div>
+  </header>
+
+  <div class="mt-10">
+    <ProjectPreview project={project} lang={lang} variant="cover" priority />
+  </div>
+
+  <div class="mt-14 grid gap-12 md:grid-cols-12">
+    <aside class="md:col-span-4 lg:col-span-3">
+      <div class="space-y-8 md:sticky md:top-24">
+        <nav aria-label={dict.project.highlights} class="hidden md:block">
+          <ol class="space-y-2 font-mono text-xs">
+            {sections.map((s) => (
+              <li>
+                <a href={`#${s.id}`} class="text-ink-muted hover:text-ink">
+                  <span class="text-accent-ink">{number(s.id)}</span> {s.label}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <div>
+          <h2 class="font-mono text-eyebrow text-ink-muted uppercase">{dict.project.stack}</h2>
+          <ul class="mt-3 flex flex-wrap gap-1.5">
+            {project.team && (
+              <li>
+                <span class="inline-flex items-center rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-xs text-accent-ink">
+                  {fmt(dict.project.team, { n: project.team })}
+                </span>
+              </li>
+            )}
+            {project.stack.map((tech) => <li class="chip">{tech}</li>)}
+          </ul>
+        </div>
+        {project.highlights && (
+          <div>
+            <h2 class="font-mono text-eyebrow text-ink-muted uppercase">{dict.project.highlights}</h2>
+            <ul class="mt-3 space-y-2 text-sm leading-6 text-ink-muted">
+              {project.highlights[lang].map((item) => (
+                <li class="flex gap-2">
+                  <span aria-hidden="true" class="text-accent-ink">▹</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </aside>
+
+    <div class="min-w-0 space-y-16 md:col-span-8 lg:col-span-9">
+      <section aria-labelledby="problem">
+        <p class="font-mono text-eyebrow text-accent-ink" aria-hidden="true">{number('problem')}</p>
+        <h2 id="problem" class={heading}>{dict.project.problem}</h2>
+        <p class="mt-4 max-w-[68ch] text-[17px] leading-relaxed text-ink-muted">{study.problem[lang]}</p>
+      </section>
+
+      <section aria-labelledby="architecture">
+        <p class="font-mono text-eyebrow text-accent-ink" aria-hidden="true">{number('architecture')}</p>
+        <h2 id="architecture" class={heading}>{dict.project.architecture}</h2>
+        <p class="mt-4 max-w-[68ch] text-[17px] leading-relaxed text-ink-muted">{study.architecture[lang]}</p>
+        {Diagram && study.diagram && (
+          <figure class="mt-8 overflow-hidden rounded-xl bg-neutral-950 ring-1 ring-neutral-950/10 dark:ring-white/10">
+            <Diagram role="img" aria-label={study.diagram.alt[lang]} class="diagram block h-auto w-full" />
+          </figure>
+        )}
+        {study.table && (
+          <div class="mt-8 overflow-x-auto rounded-xl border border-line">
+            <table class="w-full min-w-[34rem] text-left text-sm">
+              <caption class="border-b border-line bg-surface px-4 py-3 text-left font-mono text-xs text-ink-muted">
+                {study.table.caption[lang]}
+              </caption>
+              <thead>
+                <tr class="border-b border-line">
+                  {study.table.head[lang].map((cell) => (
+                    <th scope="col" class="px-4 py-3 font-semibold text-ink">{cell}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-line">
+                {study.table.rows[lang].map(([action, ...cells]) => (
+                  <tr>
+                    <th scope="row" class="px-4 py-3 font-normal text-ink">{action}</th>
+                    {cells.map((cell) => (
+                      <td class:list={['px-4 py-3 font-mono text-xs', cell === '✓' ? 'text-accent-ink' : 'text-ink-muted']}>
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      <section aria-labelledby="decisions">
+        <p class="font-mono text-eyebrow text-accent-ink" aria-hidden="true">{number('decisions')}</p>
+        <h2 id="decisions" class={heading}>{dict.project.decisions}</h2>
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+          {study.decisions.map((decision) => (
+            <div class="rounded-2xl border border-line bg-surface/60 p-5">
+              <h3 class="font-semibold tracking-tight text-ink">{decision.title[lang]}</h3>
+              <p class="mt-2 text-sm leading-6 text-ink-muted">{decision.body[lang]}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="validation">
+        <p class="font-mono text-eyebrow text-accent-ink" aria-hidden="true">{number('validation')}</p>
+        <h2 id="validation" class={heading}>{dict.project.validation}</h2>
+        <ul class="mt-6 max-w-[68ch] space-y-3 text-[15px] leading-relaxed text-ink-muted">
+          {study.validation[lang].map((item) => (
+            <li class="flex gap-3">
+              <Icon name="check" class="mt-1 size-4 shrink-0 text-accent-ink" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="gallery">
+        <p class="font-mono text-eyebrow text-accent-ink" aria-hidden="true">{number('gallery')}</p>
+        <h2 id="gallery" class={heading}>{dict.project.gallery}</h2>
+        <div class="mt-6 space-y-10">
+          {study.gallery.map((image) => (
+            <figure>
+              <a
+                href={image.src.src}
+                class="block overflow-hidden rounded-xl bg-neutral-950 ring-1 ring-neutral-950/10 transition hover:ring-emerald-500/40 dark:ring-white/10"
+              >
+                <Picture
+                  src={image.src}
+                  alt={image.alt[lang]}
+                  formats={['avif']}
+                  fallbackFormat="webp"
+                  widths={[640, 960, 1280, 1600].filter((w) => w < image.src.width).concat(Math.min(image.src.width, 1600))}
+                  sizes="(min-width: 1024px) 700px, calc(100vw - 40px)"
+                  class="h-auto w-full"
+                />
+                <span class="sr-only">{dict.project.openImage}</span>
+              </a>
+              <figcaption class="mt-3 max-w-[68ch] text-sm leading-6 text-ink-muted">{image.caption[lang]}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <a
+        href={paths.project(next.slug)[lang]}
+        class="group flex items-center justify-between gap-4 rounded-2xl border border-line bg-surface/60 p-6 transition hover:border-emerald-500/40"
+      >
+        <span>
+          <span class="block font-mono text-xs text-ink-muted">{dict.project.next}</span>
+          <span class="mt-1 block text-xl font-semibold tracking-tight text-ink">{next.title}</span>
+        </span>
+        <Icon name="arrow-right" class="size-5 text-accent-ink transition-transform group-hover:translate-x-1 motion-reduce:transition-none" />
+      </a>
+    </div>
+  </div>
+</article>

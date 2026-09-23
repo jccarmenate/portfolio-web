@@ -1,0 +1,47 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import ProjectFeatured from './ProjectFeatured.astro';
+import ProjectCard from './ProjectCard.astro';
+import Icon from './Icon.astro';
+import { featuredProjects, projects } from '../data/projects';
+import { fmt, paths, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+/** Home preview: one wide featured project, the other two as cards. */
+const { lang } = Astro.props;
+const dict = t(lang);
+const [lead, ...rest] = featuredProjects;
+const seeAll = fmt(dict.sections.seeAll, { n: projects.length });
+---
+<section id="projects" aria-labelledby="projects-title" class="container-page py-20 md:py-28">
+  <SectionHeading id="projects-title" title={dict.sections.featured}>
+    <a
+      slot="aside"
+      href={paths.projects[lang]}
+      class="group inline-flex items-center gap-1.5 text-sm font-medium text-accent-ink hover:underline hover:underline-offset-4 max-sm:hidden"
+    >
+      {seeAll}
+      <Icon name="arrow-right" class="size-3.5 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
+    </a>
+  </SectionHeading>
+
+  <div class="grid gap-6">
+    <ProjectFeatured project={lead} lang={lang} />
+    <div class="grid gap-6 sm:grid-cols-2">
+      {rest.map((project) => <ProjectCard project={project} lang={lang} />)}
+    </div>
+  </div>
+
+  <div class="mt-10 flex justify-center">
+    <a
+      href={paths.projects[lang]}
+      class="group inline-flex h-11 items-center gap-2 rounded-full border border-line px-5 text-sm font-semibold text-ink transition hover:border-ink/30 hover:bg-surface"
+    >
+      {seeAll}
+      <Icon name="arrow-right" class="size-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
+    </a>
+  </div>
+</section>

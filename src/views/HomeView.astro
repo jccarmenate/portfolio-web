@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import FeaturedProjects from '../components/FeaturedProjects.astro';
+import ExperienceSection from '../components/ExperienceSection.astro';
+import StackSection from '../components/StackSection.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { paths, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const { meta } = t(lang);
+const site = Astro.site!;
+---
+<BaseLayout
+  lang={lang}
+  title={meta.home.title}
+  description={meta.home.description}
+  alternates={paths.home}
+  current="home"
+  structuredData={[
+    {
+      '@type': 'ProfilePage',
+      url: new URL(paths.home[lang], site).href,
+      inLanguage: lang,
+      isPartOf: { '@id': new URL('/#website', site).href },
+      mainEntity: { '@id': new URL('/#person', site).href },
+    },
+  ]}
+>
+  <Hero lang={lang} />
+  <FeaturedProjects lang={lang} />
+  <ExperienceSection lang={lang} />
+  <StackSection lang={lang} />
+  <ServicesSection lang={lang} />
+  <ContactSection lang={lang} />
+</BaseLayout>

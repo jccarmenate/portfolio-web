@@ -1,0 +1,205 @@
+---
+import Icon from './Icon.astro';
+import { snippets, type Snippet } from '../data/snippets';
+import { projectBySlug } from '../data/projects';
+import { projectHref } from '../lib/links';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+/**
+ * Hero "terminal": types out real snippets from the projects and links each
+ * one to its project. The first snippet is rendered on the server, so the
+ * window is never empty without JS; typing pauses off-screen, in background
+ * tabs, on demand (WCAG 2.2.2) and never runs with reduced motion.
+ */
+const { lang } = Astro.props;
+const dict = t(lang);
+
+const items = snippets.map((snippet: Snippet) => {
+  const project = projectBySlug(snippet.project)!;
+  return {
+    ...snippet,
+    label: `${snippet.project}/${snippet.file}`,
+    href: projectHref(project, lang),
+    title: project.title,
+  };
+});
+const first = items[0];
+---
+<div class="relative isolate">
+  <div
+    aria-hidden="true"
+    class="absolute -inset-6 -z-10 rounded-[2rem] bg-[radial-gradient(55%_55%_at_65%_45%,--alpha(var(--color-emerald-400)/22%),transparent)] blur-2xl dark:bg-[radial-gradient(55%_55%_at_65%_45%,--alpha(var(--color-emerald-400)/14%),transparent)]"
+  >
+  </div>
+  <figure
+    data-code-window
+    data-snippets={JSON.stringify(items)}
+    class="overflow-hidden rounded-xl bg-neutral-950 shadow-2xl ring-1 shadow-neutral-950/20 ring-neutral-950/10 dark:ring-white/10"
+  >
+    <div class="flex h-10 items-center gap-3 border-b border-white/[0.08] px-4">
+      <span aria-hidden="true" class="flex shrink-0 gap-1.5">
+        <span class="size-2.5 rounded-full bg-white/20"></span>
+        <span class="size-2.5 rounded-full bg-white/20"></span>
+        <span class="size-2.5 rounded-full bg-white/20"></span>
+      </span>
+      <span data-code-label aria-hidden="true" class="truncate font-mono text-xs text-neutral-300">{first.label}</span>
+      <a
+        data-code-link
+        href={first.href}
+        class="ml-auto inline-flex shrink-0 items-center gap-1 font-mono text-[11px] text-neutral-400 transition hover:text-emerald-400"
+      >
+        {dict.code.viewProject}
+        <Icon name="arrow-up-right" class="size-3" />
+        <span data-code-title class="sr-only">: {first.title}</span>
+      </a>
+      <button
+        type="button"
+        data-code-pause
+        aria-pressed="false"
+        aria-label={dict.code.pause}
+        class="group grid size-6 shrink-0 place-items-center rounded text-neutral-400 transition hover:bg-white/10 hover:text-white motion-reduce:hidden"
+      >
+        <Icon name="pause" class="size-3.5 group-aria-pressed:hidden" />
+        <Icon name="play" class="hidden size-3.5 group-aria-pressed:block" />
+      </button>
+    </div>
+    <p class="sr-only">{dict.code.summary}</p>
+    <div class="h-48 overflow-hidden px-4 py-4 font-mono text-[12.5px] leading-[1.75] sm:text-[13px]">
+      <pre data-code-body aria-hidden="true" class="whitespace-pre-wrap">{
+        first.lines.map((line, i) => (
+          <Fragment>
+            {line.map(([text, kind]) => <span class={`tok-${kind}`}>{text}</span>)}
+            {i < first.lines.length - 1 && '\n'}
+          </Fragment>
+        ))
+      }</pre>
+    </div>
+    <div aria-hidden="true" class="flex h-8 items-center justify-between border-t border-white/[0.08] px-4 font-mono text-[11px] text-neutral-400">
+      <span class="inline-flex items-center gap-2">
+        <span class="size-1.5 rounded-full bg-emerald-400"></span>
+        <span data-code-lang>{first.language}</span>
+      </span>
+      <span class="flex items-center gap-1">
+        {items.map((_, i) => (
+          <span data-code-dot class:list={['h-1 rounded-full transition-all', i === 0 ? 'w-4 bg-emerald-400' : 'w-1.5 bg-white/20']}></span>
+        ))}
+      </span>
+    </div>
+  </figure>
+</div>
+
+<style>
+  @keyframes code-cursor-blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+  :global(.code-cursor) {
+    color: var(--color-emerald-400);
+    animation: code-cursor-blink 1s step-end infinite;
+  }
+</style>
+
+<script>
+  type Tok = [string, 'kw' | 'fn' | 'str' | 'text'];
+  interface Item {
+    label: string;
+    href: string;
+    title: string;
+    language: string;
+    lines: Tok[][];
+  }
+
+  const root = document.querySelector<HTMLElement>('[data-code-window]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (root && !reduceMotion) {
+    const items: Item[] = JSON.parse(root.dataset.snippets ?? '[]');
+    const body = root.querySelector<HTMLElement>('[data-code-body]')!;
+    const label = root.querySelector<HTMLElement>('[data-code-label]')!;
+    const link = root.querySelector<HTMLAnchorElement>('[data-code-link]')!;
+    const title = root.querySelector<HTMLElement>('[data-code-title]')!;
+    const language = root.querySelector<HTMLElement>('[data-code-lang]')!;
+    const dots = root.querySelectorAll<HTMLElement>('[data-code-dot]');
+    const pause = root.querySelector<HTMLButtonElement>('[data-code-pause]')!;
+
+    const CHAR_DELAY = 32;
+    const HOLD_AFTER_TYPE = 3200;
+    const HOLD_BEFORE_NEXT = 500;
+
+    let visible = false;
+    let paused = false;
+
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+    }).observe(root);
+
+    pause.addEventListener('click', () => {
+      paused = !paused;
+      pause.setAttribute('aria-pressed', String(paused));
+    });
+
+    const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    // Waits `ms`, then keeps waiting while the window is hidden or paused.
+    async function wait(ms: number) {
+      await sleep(ms);
+      while (!visible || paused || document.hidden) await sleep(200);
+    }
+
+    function show(item: Item, index: number) {
+      label.textContent = item.label;
+      link.href = item.href;
+      title.textContent = `: ${item.title}`;
+      language.textContent = item.language;
+      dots.forEach((dot, i) => {
+        const active = i === index;
+        dot.classList.toggle('w-4', active);
+        dot.classList.toggle('bg-emerald-400', active);
+        dot.classList.toggle('w-1.5', !active);
+        dot.classList.toggle('bg-white/20', !active);
+      });
+    }
+
+    async function type(item: Item) {
+      body.textContent = '';
+      const cursor = document.createElement('span');
+      cursor.className = 'code-cursor';
+      cursor.textContent = '▍';
+      body.appendChild(cursor);
+      for (const [i, line] of item.lines.entries()) {
+        for (const [text, kind] of line) {
+          const span = document.createElement('span');
+          span.className = `tok-${kind}`;
+          body.insertBefore(span, cursor);
+          for (const ch of text) {
+            span.textContent += ch;
+            await wait(CHAR_DELAY);
+          }
+        }
+        if (i < item.lines.length - 1) body.insertBefore(document.createTextNode('\n'), cursor);
+      }
+    }
+
+    (async () => {
+      let index = 0;
+      await wait(HOLD_AFTER_TYPE);
+      while (true) {
+        index = (index + 1) % items.length;
+        await wait(HOLD_BEFORE_NEXT);
+        show(items[index], index);
+        await type(items[index]);
+        await wait(HOLD_AFTER_TYPE);
+      }
+    })();
+  }
+</script>

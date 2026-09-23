@@ -1,0 +1,27 @@
+---
+import { repoUrl, type Project } from '../data/projects';
+import { projectHref } from '../lib/links';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  level?: 'h2' | 'h3';
+  class?: string;
+}
+
+/** Card heading whose link stretches over the whole card (see ProjectLinks). */
+const { project, lang, level: Heading = 'h3', class: className } = Astro.props;
+const external = !project.caseStudy;
+const href = external ? repoUrl(project) : projectHref(project, lang);
+---
+<Heading class:list={['font-semibold tracking-tight text-ink', className]}>
+  <a
+    href={href}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener' : undefined}
+    class="outline-none after:absolute after:inset-0 after:rounded-2xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-(--focus)"
+  >
+    {project.title}{external && <span class="sr-only"> — GitHub {t(lang).a11y.newTab}</span>}
+  </a>
+</Heading>
