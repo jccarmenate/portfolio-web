@@ -10,7 +10,7 @@ export const en: typeof es = {
     projects: {
       title: 'Projects — Juan Carlos · Backend & AI Engineer',
       description:
-        '8 projects with code on GitHub: a from-scratch RAG system, a LangGraph multi-agent code generator, role-based JWT auth, P2P networking and more.',
+        '9 projects with code on GitHub: a from-scratch RAG system, a LangGraph multi-agent code generator, role-based JWT auth, P2P networking and more.',
     },
     caseStudySuffix: 'Case study · Juan Carlos',
     ogAlt: 'Juan Carlos — Backend & AI Engineer',

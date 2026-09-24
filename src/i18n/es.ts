@@ -8,7 +8,7 @@ export const es = {
     projects: {
       title: 'Proyectos — Juan Carlos · Backend & AI Engineer',
       description:
-        '8 proyectos con código en GitHub: sistema RAG hecho desde cero, generador de código multiagente con LangGraph, auth JWT con roles, redes P2P y más.',
+        '9 proyectos con código en GitHub: sistema RAG hecho desde cero, generador de código multiagente con LangGraph, auth JWT con roles, redes P2P y más.',
     },
     caseStudySuffix: 'Caso de estudio · Juan Carlos',
     ogAlt: 'Juan Carlos — Backend & AI Engineer',

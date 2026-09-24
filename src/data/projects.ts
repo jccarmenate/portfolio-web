@@ -8,6 +8,7 @@ import guildworkCover from '../assets/projects/guildwork.png';
 import matcomGuardCover from '../assets/projects/matcom-guard.png';
 import populationCover from '../assets/projects/population-simulation.png';
 import hexarenaCover from '../assets/projects/hexarena.svg';
+import hulkIdeCover from '../assets/projects/hulk-ide.png';
 import captivePortalDiagram from '../assets/diagrams/captive-portal.svg';
 import linkChatDiagram from '../assets/diagrams/link-chat.svg';
 import multiagentGraph from '../assets/diagrams/multiagent-graph.svg';
@@ -549,6 +550,24 @@ export const projects: Project[] = [
       alt: {
         es: 'Tablero de Hex 7×7 con un camino rojo ganador que une los bordes superior e inferior.',
         en: '7×7 Hex board with a winning red path connecting the top and bottom edges.',
+      },
+    },
+  },
+  {
+    slug: 'hulk-ide',
+    title: 'HULK IDE',
+    repo: 'jccarmenate/hulk-ide',
+    summary: {
+      es: 'Servidor LSP y extensión de VS Code para HULK, sobre un compilador Rust/LLVM: diagnósticos en vivo.',
+      en: 'LSP server and VS Code extension for the HULK language, built on a Rust/LLVM compiler, with live diagnostics.',
+    },
+    stack: ['Rust', 'TypeScript', 'LLVM', 'LSP'],
+    cover: {
+      kind: 'screenshot',
+      src: hulkIdeCover,
+      alt: {
+        es: 'Terminal con hulk-cli sobre LLVM 17: código HULK con una jerarquía de figuras y las áreas calculadas.',
+        en: 'Terminal running hulk-cli on LLVM 17: HULK source with a shape hierarchy and the computed areas.',
       },
     },
   },
