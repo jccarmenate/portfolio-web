@@ -24,7 +24,7 @@ const { project, lang, reverse = false, headingLevel = 'h3', priority = false } 
     <ProjectPreview project={project} lang={lang} variant="featured" priority={priority} />
   </div>
   <div class="flex min-w-0 flex-col px-5 pt-3 pb-6 md:col-span-5 md:p-8">
-    <ProjectTitle project={project} lang={lang} level={headingLevel} class="text-xl md:text-2xl" />
+    <ProjectTitle project={project} lang={lang} level={headingLevel} class="text-lg md:text-xl" />
     <p class="mt-3 text-[15px] leading-relaxed text-ink-muted">{project.summary[lang]}</p>
     {project.highlights && (
       <ul class="mt-4 hidden space-y-2 text-sm leading-6 text-ink-muted md:block">

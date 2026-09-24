@@ -7,16 +7,17 @@
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --text-display: clamp(2.75rem, 1.6rem + 4.2vw, 4.5rem);
-  --text-display--line-height: 1;
-  --text-display--letter-spacing: -0.04em;
-  --text-display--font-weight: 650;
-  --text-title: clamp(1.625rem, 1.3rem + 1.2vw, 2.125rem);
-  --text-title--line-height: 1.15;
-  --text-title--letter-spacing: -0.03em;
+  /* Calm scale: 36→52px display, 22→28px section titles, 16→18px lead. */
+  --text-display: clamp(2.25rem, 1.7rem + 2.2vw, 3.25rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.025em;
+  --text-display--font-weight: 600;
+  --text-title: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --text-title--line-height: 1.25;
+  --text-title--letter-spacing: -0.015em;
   --text-title--font-weight: 600;
-  --text-lead: clamp(1.0625rem, 0.98rem + 0.35vw, 1.25rem);
-  --text-lead--line-height: 1.6;
+  --text-lead: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lead--line-height: 1.65;
   --text-eyebrow: 0.75rem;
   --text-eyebrow--line-height: 1rem;
   --text-eyebrow--letter-spacing: 0.12em;
