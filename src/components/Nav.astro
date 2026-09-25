@@ -24,6 +24,7 @@ const iconButton =
   'grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface hover:text-ink';
 ---
 <header class="sticky top-0 z-50 border-b border-line/70 bg-canvas/80 backdrop-blur-md">
+  <div aria-hidden="true" class="scroll-progress"></div>
   <div class="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-5 sm:px-8">
     <a href={home} aria-label={dict.a11y.home} class="font-mono text-[15px] font-semibold tracking-tight text-ink">
       <span class="text-ink-muted">&lt;</span>JC<span class="text-accent-ink">/&gt;</span>
@@ -36,7 +37,7 @@ const iconButton =
             <a
               href={link.href}
               aria-current={link.current ? 'page' : undefined}
-              class="rounded-md px-3 py-2 text-sm text-ink-muted transition hover:text-ink aria-[current=page]:font-medium aria-[current=page]:text-ink"
+              class="relative rounded-md px-3 py-2 text-sm text-ink-muted transition after:pointer-events-none after:absolute after:inset-x-3 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-200 hover:text-ink hover:after:scale-x-100 focus-visible:after:scale-x-100 aria-[current=page]:font-medium aria-[current=page]:text-ink aria-[current=page]:after:scale-x-100 motion-reduce:after:transition-none"
             >
               {link.label}
             </a>

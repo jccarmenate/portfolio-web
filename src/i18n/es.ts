@@ -55,6 +55,8 @@ export const es = {
     projectsIntro:
       'Todo el código está en GitHub. Si tienes poco tiempo, empieza por los tres primeros: son los más cercanos al trabajo de Backend e IA.',
     moreProjects: 'Más proyectos',
+    approach: 'Cómo trabajo',
+    approachIntro: 'Tres hábitos que se repiten en mis proyectos, cada uno con la evidencia a un clic.',
     experience: 'Experiencia y formación',
     stack: 'Stack técnico',
     services: 'Servicios',

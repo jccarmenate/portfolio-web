@@ -17,7 +17,7 @@ const dict = t(lang);
     {services.map((service) => {
       const evidence = service.evidence.map((slug) => projectBySlug(slug)!).filter(Boolean);
       return (
-        <div class="grid gap-2 py-6 md:grid-cols-12 md:gap-10">
+        <div class="reveal-scroll grid gap-2 py-6 md:grid-cols-12 md:gap-10">
           <dt class="font-semibold text-ink md:col-span-4">{service.title[lang]}</dt>
           <dd class="text-[15px] leading-relaxed text-ink-muted md:col-span-8">
             <p>{service.description[lang]}</p>

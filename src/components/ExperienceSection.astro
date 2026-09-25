@@ -14,7 +14,7 @@ const dict = t(lang);
     <SectionHeading id="experience-title" title={dict.sections.experience} />
     <ol class="space-y-12">
       {experience.map((entry, i) => (
-        <li class:list={['grid gap-4 md:grid-cols-12 md:gap-10', i > 0 && 'border-t border-line pt-12']}>
+        <li class:list={['reveal-scroll grid gap-4 md:grid-cols-12 md:gap-10', i > 0 && 'border-t border-line pt-12']}>
           <div class="font-mono text-[13px] leading-relaxed text-ink-muted md:col-span-3">
             <p>{entry.dateRange[lang]}</p>
             {entry.dateNote && <p>{entry.dateNote[lang]}</p>}

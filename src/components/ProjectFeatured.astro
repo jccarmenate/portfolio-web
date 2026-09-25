@@ -18,7 +18,7 @@ const { project, lang, reverse = false, headingLevel = 'h3', priority = false } 
 ---
 <article
   id={project.slug}
-  class="group relative isolate grid grid-cols-1 rounded-2xl border border-line bg-surface/60 transition duration-300 focus-within:-translate-y-0.5 focus-within:border-emerald-500/40 hover:-translate-y-0.5 hover:border-emerald-500/40 motion-reduce:transform-none md:grid-cols-12"
+  class="reveal-scroll group relative isolate grid grid-cols-1 rounded-2xl border border-line bg-surface/60 transition duration-300 focus-within:-translate-y-0.5 focus-within:border-emerald-500/40 hover:-translate-y-0.5 hover:border-emerald-500/40 motion-reduce:transform-none md:grid-cols-12"
 >
   <div class:list={['min-w-0 p-3 md:col-span-7 md:p-4', reverse && 'md:order-2']}>
     <ProjectPreview project={project} lang={lang} variant="featured" priority={priority} />

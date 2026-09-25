@@ -24,6 +24,14 @@ Tailwind CSS.
 - **Hero code window** — types out short snippets from the projects and
   links each one to its project. The first snippet is server-rendered; typing
   pauses off-screen, in background tabs, on demand and under reduced motion.
+- **"How I work"** — three engineering habits (test against the real thing,
+  secure by default, measure don't guess), each backed by links to the
+  projects and case studies where the evidence lives.
+- **Minimal motion, CSS only** — a scroll-progress bar under the nav, section
+  and card reveals, and a sliding nav underline, all driven by CSS
+  scroll-driven animations (`animation-timeline`) with no JavaScript. Browsers
+  without support, `prefers-reduced-motion` and print show everything
+  statically.
 - **Bilingual routing done properly** — one route map
   (`src/i18n/paths.mjs`) drives canonical URLs, `hreflang` alternates
   (es/en/x-default), the sitemap and the language switch, which always lands

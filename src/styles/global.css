@@ -120,6 +120,60 @@
     }
   }
 
+  /*
+   * Scroll-driven motion, CSS only. Where `animation-timeline` isn't supported
+   * (Firefox) or motion is reduced, none of this applies and content is simply
+   * visible: nothing depends on it.
+   *  - .reveal-scroll: a block fades up as it enters the viewport. `--i` offsets
+   *    the range so siblings in a row land one after another. `backwards` fill
+   *    keeps it hidden until it starts and hands control back afterwards, so
+   *    hover transforms on the same element keep working.
+   *  - .scroll-progress: a 2px accent line under the nav that fills with the page.
+   */
+  .scroll-progress {
+    display: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal-scroll {
+        animation: reveal-scroll linear backwards;
+        animation-timeline: view();
+        animation-range: entry calc(var(--i, 0) * 6%) entry calc(30% + var(--i, 0) * 6%);
+      }
+      .scroll-progress {
+        display: block;
+        position: absolute;
+        inset-inline: 0;
+        bottom: -1px;
+        height: 2px;
+        background: var(--accent);
+        transform-origin: left;
+        transform: scaleX(0);
+        animation: scroll-progress linear both;
+        animation-timeline: scroll(root block);
+      }
+    }
+  }
+  @keyframes reveal-scroll {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+  @keyframes scroll-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @media print {
+    .reveal-scroll {
+      animation: none;
+    }
+    .scroll-progress {
+      display: none;
+    }
+  }
+
   /* Syntax colors for the hero code window (always on a dark surface). */
   .tok-kw {
     color: var(--color-emerald-400);

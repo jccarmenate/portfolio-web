@@ -28,6 +28,14 @@ Tailwind CSS.
   proyectos y enlaza cada uno a su proyecto. El primer fragmento se renderiza
   en el servidor; el tecleo se pausa fuera de pantalla, en pestañas en
   segundo plano, a demanda y con movimiento reducido.
+- **«Cómo trabajo»** — tres hábitos de ingeniería (probar contra lo real,
+  seguridad por defecto, medir en vez de estimar), cada uno con enlaces a los
+  proyectos y casos de estudio donde está la evidencia.
+- **Movimiento mínimo, solo CSS** — barra de progreso de scroll bajo la
+  navegación, aparición suave de secciones y tarjetas y subrayado deslizante
+  en el menú, todo con animaciones de CSS dirigidas por scroll
+  (`animation-timeline`) y sin JavaScript. Los navegadores sin soporte,
+  `prefers-reduced-motion` y la impresión muestran todo de forma estática.
 - **Enrutado bilingüe bien hecho** — un único mapa de rutas
   (`src/i18n/paths.mjs`) genera las URLs canónicas, los `hreflang`
   (es/en/x-default), el sitemap y el cambio de idioma, que siempre lleva a la

@@ -56,6 +56,8 @@ export const en: typeof es = {
     projectsIntro:
       "All the code is on GitHub. Short on time? Start with the first three — they're the closest to Backend and AI work.",
     moreProjects: 'More projects',
+    approach: 'How I work',
+    approachIntro: 'Three habits that show up across my projects, each with the evidence one click away.',
     experience: 'Experience & education',
     stack: 'Tech stack',
     services: 'Services',
