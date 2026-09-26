@@ -95,7 +95,7 @@ const jsonLd = {
     <meta name="theme-color" content="#ffffff" />
 
     <Font cssVariable="--font-geist" preload />
-    <Font cssVariable="--font-geist-mono" />
+    <Font cssVariable="--font-geist-mono" preload />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={profile.name} />
@@ -115,7 +115,7 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:image:alt" content={ogImageAlt ?? dict.meta.ogAlt} />
 
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
 
     <script is:inline>
       (() => {

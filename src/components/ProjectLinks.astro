@@ -26,7 +26,7 @@ const dict = t(lang);
       href={repoUrl(project)}
       target="_blank"
       rel="noopener"
-      class="pointer-events-auto inline-flex items-center gap-1.5 text-ink-muted transition hover:text-ink"
+      class="pointer-events-auto inline-flex min-h-6 items-center gap-1.5 text-ink-muted transition hover:text-ink"
     >
       <Icon name="github" class="size-3.5" />
       {dict.project.code}<span class="sr-only"> — {project.title} {dict.a11y.newTab}</span>
@@ -43,7 +43,7 @@ const dict = t(lang);
       href={project.demo}
       target="_blank"
       rel="noopener"
-      class="pointer-events-auto inline-flex items-center gap-1 text-ink-muted transition hover:text-ink"
+      class="pointer-events-auto inline-flex min-h-6 items-center gap-1 text-ink-muted transition hover:text-ink"
     >
       {dict.project.demo}
       <Icon name="arrow-up-right" class="size-3.5" />

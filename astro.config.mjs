@@ -8,6 +8,9 @@ const SITE = 'https://portfolio-web-eight-rose.vercel.app';
 export default defineConfig({
   site: SITE,
   trailingSlash: 'always',
+  // The whole stylesheet is ~9 KB brotli: inline it so first paint doesn't wait
+  // on a second request.
+  build: { inlineStylesheets: 'always' },
   integrations: [
     sitemap({
       // Pair each page with its translation (`/proyectos/` ↔ `/en/projects/`).

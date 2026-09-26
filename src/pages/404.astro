@@ -43,7 +43,12 @@ import { paths } from '../i18n/ui';
 </BaseLayout>
 
 <script>
+  // A malformed escape like /%E0%A4%A makes decodeURIComponent throw.
+  let path = location.pathname;
+  try {
+    path = decodeURIComponent(path);
+  } catch {}
   document.querySelectorAll('[data-path]').forEach((el) => {
-    el.textContent = decodeURIComponent(location.pathname);
+    el.textContent = path;
   });
 </script>

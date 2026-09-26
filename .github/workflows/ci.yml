@@ -8,9 +8,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,3 +25,5 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run build
+      - run: npm test
+      - run: npm audit --omit=dev --audit-level=high

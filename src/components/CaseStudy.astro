@@ -122,7 +122,7 @@ const number = (id: string) => String(sections.findIndex((s) => s.id === id) + 1
           </figure>
         )}
         {study.table && (
-          <div class="mt-8 overflow-x-auto rounded-xl border border-line">
+          <div role="region" tabindex="0" aria-label={study.table.caption[lang]} class="mt-8 overflow-x-auto rounded-xl border border-line">
             <table class="w-full min-w-[34rem] text-left text-sm">
               <caption class="border-b border-line bg-surface px-4 py-3 text-left font-mono text-xs text-ink-muted">
                 {study.table.caption[lang]}

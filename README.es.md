@@ -7,13 +7,14 @@ Computación que busca roles de Backend Engineer / AI Engineer. Bilingüe
 (español por defecto en `/`, inglés en `/en/`), construido con Astro y
 Tailwind CSS.
 
+**Sitio:** https://portfolio-web-eight-rose.vercel.app
 **Repositorio:** https://github.com/jccarmenate/portfolio-web
 
 ## Características
 
 - **Home pensada para reclutadores** — nombre y rol en el `h1`, un pitch de
   dos líneas, datos clave (carrera, fecha de graduación, ubicación, idiomas)
-  y dos CTAs (proyectos y CV), todo visible sin hacer scroll en un móvil. El
+  y dos CTAs (proyectos y CV), todo visible sin hacer scroll en un móvil actual. El
   CV queda siempre a un clic en la navegación fija.
 - **Presentación de proyectos** — todas las vistas previas usan el mismo
   marco de "ventana": capturas reales de cada repo (recortes 16:10 servidos
@@ -24,18 +25,21 @@ Tailwind CSS.
 - **Casos de estudio** — `/proyectos/<slug>/` y `/en/projects/<slug>/` para
   los tres proyectos destacados: problema, arquitectura, decisiones clave,
   validación y galería, todo sacado de los README de los repos.
-- **Ventana de código en el hero** — escribe fragmentos cortos de los
-  proyectos y enlaza cada uno a su proyecto. El primer fragmento se renderiza
+- **Ventana de código en el hero** — escribe extractos cortos copiados
+  literalmente del código de los proyectos (con archivo y rango de líneas) y
+  enlaza cada uno a su proyecto. El primer fragmento se renderiza
   en el servidor; el tecleo se pausa fuera de pantalla, en pestañas en
   segundo plano, a demanda y con movimiento reducido.
 - **«Cómo trabajo»** — tres hábitos de ingeniería (probar contra lo real,
   seguridad por defecto, medir en vez de estimar), cada uno con enlaces a los
   proyectos y casos de estudio donde está la evidencia.
 - **Movimiento mínimo, solo CSS** — barra de progreso de scroll bajo la
-  navegación, aparición suave de secciones y tarjetas y subrayado deslizante
-  en el menú, todo con animaciones de CSS dirigidas por scroll
-  (`animation-timeline`) y sin JavaScript. Los navegadores sin soporte,
-  `prefers-reduced-motion` y la impresión muestran todo de forma estática.
+  navegación y aparición suave de secciones y tarjetas, con animaciones de CSS
+  dirigidas por scroll (`animation-timeline`), más un subrayado deslizante en
+  el menú, sin JavaScript. Los navegadores sin soporte,
+  `prefers-reduced-motion` y la impresión muestran todo de forma estática. Un
+  test protege el CSS compilado (el minificador puede eliminar estas
+  animaciones en producción sin avisar).
 - **Enrutado bilingüe bien hecho** — un único mapa de rutas
   (`src/i18n/paths.mjs`) genera las URLs canónicas, los `hreflang`
   (es/en/x-default), el sitemap y el cambio de idioma, que siempre lleva a la
@@ -57,6 +61,8 @@ Tailwind CSS.
 
 ## Cómo empezar
 
+Requiere Node.js 22.12 o superior.
+
 ```bash
 npm ci
 npm run dev
@@ -72,9 +78,10 @@ Abre http://localhost:4321 (las URLs llevan barra final, p. ej. `/proyectos/`).
 | `npm run check` | Chequeo de tipos y validación (`astro check`) |
 | `npm run build` | Build de producción a `dist/` |
 | `npm run preview` | Sirve el build de producción localmente |
+| `npm test` | Comprobaciones sobre `dist/` (tras un build): metadatos, hreflang, sitemap, enlaces, imágenes y CSS minificado |
 
-La CI (GitHub Actions) ejecuta `npm ci`, `npm run check` y `npm run build`
-en cada push y pull request.
+La CI (GitHub Actions) ejecuta `npm ci`, `npm run check`, `npm run build`,
+`npm test` y `npm audit` en cada push y pull request.
 
 ## Despliegue
 
@@ -93,7 +100,10 @@ src/
 ├── data/         # contenido editable — perfil, experiencia, proyectos (+ casos de estudio), servicios, fragmentos
 ├── assets/       # capturas de proyectos, diagramas SVG, fuentes autoalojadas (OFL)
 ├── i18n/         # textos de interfaz (es/en) y el mapa de rutas compartido
-└── lib/          # utilidades pequeñas
+├── lib/          # utilidades pequeñas
+└── styles/       # global.css — tokens de diseño, modo oscuro, movimiento
+public/           # CV en PDF (ES/EN), imágenes Open Graph, favicons
+scripts/          # tests de sanidad sobre dist/ (node:test)
 ```
 
 Para añadir un proyecto, agrégalo en `src/data/projects.ts`: su vista previa

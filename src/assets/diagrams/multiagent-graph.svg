@@ -31,8 +31,8 @@
       <text x="19" y="206">sandbox: network_mode=none</text>
       <text x="19" y="224">non-root · cap_drop=ALL</text>
       <text x="19" y="242">no Docker socket · CPU/mem limits</text>
-      <text x="19" y="300" fill="#737373">events → SQLite + WebSocket</text>
-      <text x="19" y="318" fill="#737373">/ws/runs/{run_id} → live dashboard</text>
+      <text x="19" y="300" fill="#a3a3a3">events → SQLite + WebSocket</text>
+      <text x="19" y="318" fill="#a3a3a3">/ws/runs/{run_id} → live dashboard</text>
     </g>
   </g>
   <!-- flechas -->

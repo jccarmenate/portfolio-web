@@ -67,7 +67,7 @@ const first = items[0];
       </button>
     </div>
     <p class="sr-only">{dict.code.summary}</p>
-    <div class="h-52 overflow-hidden px-4 py-4 font-mono text-xs leading-[1.75]">
+    <div class="h-56 overflow-hidden px-4 py-4 font-mono text-[11px] leading-[1.75]">
       <pre data-code-body aria-hidden="true" class="whitespace-pre-wrap">{
         first.lines.map((line, i) => (
           <Fragment>
@@ -105,6 +105,9 @@ const first = items[0];
   :global(.code-cursor) {
     color: var(--color-emerald-400);
     animation: code-cursor-blink 1s step-end infinite;
+  }
+  :global([data-code-window][data-paused] .code-cursor) {
+    animation-play-state: paused;
   }
 </style>
 
@@ -145,6 +148,7 @@ const first = items[0];
     pause.addEventListener('click', () => {
       paused = !paused;
       pause.setAttribute('aria-pressed', String(paused));
+      root.toggleAttribute('data-paused', paused);
     });
 
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

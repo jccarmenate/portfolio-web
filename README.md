@@ -7,11 +7,13 @@ student looking for Backend Engineer / AI Engineer roles. Bilingual
 (Spanish default at `/`, English at `/en/`), built with Astro and
 Tailwind CSS.
 
+**Live:** https://portfolio-web-eight-rose.vercel.app
+
 ## Features
 
 - **Recruiter-first home** — name and role in the `h1`, a two-line pitch,
   key facts (degree, graduation date, location, languages) and two CTAs
-  (projects, CV), all above the fold on a phone. The CV stays one click
+  (projects, CV), all above the fold on a typical modern phone. The CV stays one click
   away in the sticky nav.
 - **Project showcase** — every preview sits in the same "window" frame:
   real screenshots from each repo (16:10 crops served as AVIF/WebP through
@@ -21,17 +23,19 @@ Tailwind CSS.
 - **Case studies** — `/proyectos/<slug>/` and `/en/projects/<slug>/` for the
   three featured projects: problem, architecture, key decisions, validation
   and a gallery, all sourced from the repos' READMEs.
-- **Hero code window** — types out short snippets from the projects and
-  links each one to its project. The first snippet is server-rendered; typing
+- **Hero code window** — types out short excerpts copied verbatim from the
+  projects' own source (file and line range shown) and links each one to its
+  project. The first snippet is server-rendered; typing
   pauses off-screen, in background tabs, on demand and under reduced motion.
 - **"How I work"** — three engineering habits (test against the real thing,
   secure by default, measure don't guess), each backed by links to the
   projects and case studies where the evidence lives.
-- **Minimal motion, CSS only** — a scroll-progress bar under the nav, section
-  and card reveals, and a sliding nav underline, all driven by CSS
-  scroll-driven animations (`animation-timeline`) with no JavaScript. Browsers
-  without support, `prefers-reduced-motion` and print show everything
-  statically.
+- **Minimal motion, CSS only** — a scroll-progress bar under the nav and
+  section/card reveals driven by CSS scroll-driven animations
+  (`animation-timeline`), plus a sliding nav underline, with no JavaScript.
+  Browsers without support, `prefers-reduced-motion` and print show everything
+  statically. A test guards the built CSS (the minifier can silently drop
+  these animations in production).
 - **Bilingual routing done properly** — one route map
   (`src/i18n/paths.mjs`) drives canonical URLs, `hreflang` alternates
   (es/en/x-default), the sitemap and the language switch, which always lands
@@ -53,6 +57,8 @@ Tailwind CSS.
 
 ## Getting started
 
+Requires Node.js 22.12 or newer.
+
 ```bash
 npm ci
 npm run dev
@@ -68,9 +74,10 @@ Open http://localhost:4321 (URLs use a trailing slash, e.g. `/proyectos/`).
 | `npm run check` | Type-check and validate the project (`astro check`) |
 | `npm run build` | Production build to `dist/` |
 | `npm run preview` | Serve the production build locally |
+| `npm test` | Sanity checks on `dist/` (run after a build): metadata, hreflang, sitemap, links, images, minified CSS |
 
-CI (GitHub Actions) runs `npm ci`, `npm run check` and `npm run build` on
-every push and pull request.
+CI (GitHub Actions) runs `npm ci`, `npm run check`, `npm run build`,
+`npm test` and `npm audit` on every push and pull request.
 
 ## Deployment
 
@@ -89,7 +96,10 @@ src/
 ├── data/         # editable content — profile, experience, projects (+ case studies), services, snippets
 ├── assets/       # project screenshots, inline SVG diagrams, self-hosted fonts (OFL)
 ├── i18n/         # UI strings (es/en) and the shared route map
-└── lib/          # small helpers
+├── lib/          # small helpers
+└── styles/       # global.css — design tokens, dark mode, motion
+public/           # CV PDFs (ES/EN), Open Graph images, favicons
+scripts/          # sanity tests for dist/ (node:test)
 ```
 
 To add a project, append it to `src/data/projects.ts`: a real screenshot in
