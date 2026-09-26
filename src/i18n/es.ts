@@ -19,7 +19,7 @@ export const es = {
     closeMenu: 'Cerrar menú',
     darkMode: 'Modo oscuro',
     newTab: '(se abre en una pestaña nueva)',
-    home: 'Juan Carlos — inicio',
+    home: 'JC — Juan Carlos, inicio',
     mainNav: 'Principal',
     switchLang: '— versión en español',
   },
@@ -35,7 +35,7 @@ export const es = {
     status: 'Buscando mi próximo rol',
     role: 'Backend & AI Engineer',
     lead: 'Construyo backends en Python y sistemas con LLMs: RAG, agentes y fine-tuning.',
-    credential: 'He pasado 10 meses ajustando un LLM en producción para automatizar el inventario de una empresa.',
+    credential: 'Ajusté (fine-tuning) un LLM durante 10 meses para automatizar el inventario de una empresa.',
     degree: 'Ciencias de la Computación · último año · Universidad de La Habana (MatCom)',
     facts: ['Graduación jul. 2027', 'La Habana, Cuba'],
     ctaProjects: 'Ver proyectos',
@@ -46,7 +46,7 @@ export const es = {
     viewProject: 'ver proyecto',
     pause: 'Pausar animación',
     summary:
-      'Fragmentos de código de mis proyectos: RAG, LangGraph, rotación de JWT, portal cautivo y MCTS.',
+      'Extractos literales de mis proyectos: red de inferencia bayesiana, sandbox de Docker, detección de reuso de refresh tokens, PBKDF2 y MCTS con RAVE.',
   },
   sections: {
     featured: 'Proyectos destacados',

@@ -21,7 +21,7 @@ export const en: typeof es = {
     closeMenu: 'Close menu',
     darkMode: 'Dark mode',
     newTab: '(opens in a new tab)',
-    home: 'Juan Carlos — home',
+    home: 'JC — Juan Carlos, home',
     mainNav: 'Main',
     switchLang: '— English version',
   },
@@ -37,7 +37,7 @@ export const en: typeof es = {
     status: 'Open to work',
     role: 'Backend & AI Engineer',
     lead: 'I build Python backends and LLM systems: RAG, agents and fine-tuning.',
-    credential: "I spent 10 months fine-tuning an LLM in production to automate a company's inventory.",
+    credential: "I fine-tuned an LLM over 10 months to automate a company's inventory management.",
     degree: 'Computer Science · final year · University of Havana (MatCom)',
     facts: ['Graduating Jul 2027', 'Havana, Cuba'],
     ctaProjects: 'View projects',
@@ -47,7 +47,8 @@ export const en: typeof es = {
   code: {
     viewProject: 'view project',
     pause: 'Pause animation',
-    summary: 'Code snippets from my projects: RAG, LangGraph, JWT rotation, captive portal and MCTS.',
+    summary:
+      'Verbatim excerpts from my projects: Bayesian inference network, Docker sandbox, refresh-token reuse detection, PBKDF2 and MCTS with RAVE.',
   },
   sections: {
     featured: 'Featured projects',

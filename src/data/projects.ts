@@ -137,30 +137,30 @@ export const projects: Project[] = [
         {
           title: { es: 'Sandbox endurecido', en: 'Hardened sandbox' },
           body: {
-            es: 'Contenedores hermanos, no Docker-in-Docker: el código generado nunca ve el socket de Docker. Imágenes fijadas y precompiladas, network_mode=none, límites de CPU, memoria y procesos, usuario no root, cap_drop=ALL y un reaper que elimina contenedores huérfanos.',
-            en: 'Sibling containers, not Docker-in-Docker: generated code never sees the Docker socket. Pinned pre-built images, network_mode=none, CPU, memory and process limits, a non-root user, cap_drop=ALL and a reaper that removes orphaned containers.',
+            es: 'Contenedores hermanos, no Docker-in-Docker: el código generado nunca ve el socket de Docker. Imágenes precompiladas que elige el proyecto, nunca el LLM, network_mode=none, límites de CPU, memoria y procesos, usuario no root, cap_drop=ALL y un reaper que elimina contenedores huérfanos.',
+            en: 'Sibling containers, not Docker-in-Docker: generated code never sees the Docker socket. Pre-built images chosen by the project (never by the LLM), network_mode=none, CPU, memory and process limits, a non-root user, cap_drop=ALL and a reaper that removes orphaned containers.',
           },
         },
         {
           title: { es: 'Bucle con frenos', en: 'A loop with brakes' },
           body: {
-            es: 'Un circuit breaker corta si el mismo fallo se repite dos veces seguidas y MAX_ITERATIONS (4 por defecto) pone el tope. Que la salud del backend va primero lo impone el código, no el modelo.',
-            en: 'A circuit breaker stops when the same failure repeats twice in a row, and MAX_ITERATIONS (default 4) caps it. Backend health taking priority is enforced in code, not left to the model.',
+            es: 'Un circuit breaker corta cuando reaparece el mismo fallo (mismo objetivo de arreglo y misma firma de error) y MAX_ITERATIONS (4 por defecto) pone el tope. Que la salud del backend va primero lo impone el código, no el modelo.',
+            en: 'A circuit breaker stops when the same failure (same fix target and error signature) recurs, and MAX_ITERATIONS (default 4) caps it. Backend health taking priority is enforced in code, not left to the model.',
           },
         },
       ],
       validation: {
         es: [
           'Tests de routing, reviewer y prompts, más CI separada para backend y frontend.',
-          'Test de integración del WebSocket: primero reproduce el historial y luego emite en vivo.',
+          'Test de integración del WebSocket: al conectar reproduce el historial guardado, en orden.',
           'Ejecuciones reales de extremo a extremo hasta llegar a succeeded con ambos sandboxes en verde.',
-          'Esas ejecuciones destaparon bugs que los tests con stubs no veían (rutas duplicadas /api/api, un reviewer que nunca devolvía el fallo al backend, tests que asumían CRUD inexistente); cada uno tiene su test de regresión.',
+          'Esas ejecuciones destaparon bugs que los tests con stubs no veían (rutas duplicadas /api/api, un reviewer que nunca devolvía el fallo al backend, tests que asumían CRUD inexistente). Los de enrutado y del reviewer quedaron con test de regresión; los arreglos de prompts fueron cambios de prompt sin test automático.',
         ],
         en: [
           'Routing, reviewer and prompt tests, plus separate backend and frontend CI.',
-          'WebSocket integration test: replay history first, then stream live.',
+          'WebSocket integration test: on connect it replays the stored history in order.',
           'Real end-to-end runs until reaching succeeded with both sandboxes green.',
-          "Those runs exposed bugs stubbed tests missed (doubled /api/api routes, a reviewer that never routed back to the backend, tests assuming CRUD that didn't exist); each one has a regression test.",
+          "Those runs exposed bugs stubbed tests missed (doubled /api/api routes, a reviewer that never routed back to the backend, tests assuming CRUD that didn't exist). The routing and reviewer bugs got regression tests; the prompt fixes were prompt changes with no automated test.",
         ],
       },
       gallery: [
@@ -195,19 +195,19 @@ export const projects: Project[] = [
     repo: 'jccarmenate/tech-rag-information-retrieval-system',
     featured: true,
     summary: {
-      es: 'Buscador y asistente RAG hecho desde cero: responde citando sus fuentes y su calidad se mide con métricas IR.',
-      en: 'RAG search engine and assistant built from scratch: answers cite sources; quality measured with IR metrics.',
+      es: 'Buscador RAG con índice invertido y red bayesiana propios: cita sus fuentes y se evalúa con métricas IR.',
+      en: 'RAG search engine with its own inverted index and Bayesian network: cites sources, evaluated with IR metrics.',
     },
     highlights: {
       es: [
-        'Red de inferencia bayesiana (Turtle & Croft) e índice invertido propios, fusionados con búsqueda vectorial en ChromaDB.',
-        'Evaluado con P@k, MAP, MRR y nDCG sobre qrels propios, y fidelidad del RAG con LLM-as-judge.',
-        '120+ tests y CI en GitHub Actions; proveedor de LLM intercambiable (Ollama o Claude).',
+        'Red de inferencia bayesiana (Turtle & Croft) e índice invertido propios, más búsqueda vectorial en ChromaDB; el RAG une los resultados de ambos.',
+        'Evaluado con P@k, MAP, MRR y nDCG sobre qrels propios congelados (15 consultas, corpus de 22 documentos).',
+        '120+ tests y CI del frontend en GitHub Actions; proveedor de LLM intercambiable (Ollama o Claude).',
       ],
       en: [
-        'Bayesian inference network (Turtle & Croft) and a custom inverted index, fused with ChromaDB vector search.',
-        'Evaluated with P@k, MAP, MRR and nDCG on custom qrels, plus RAG faithfulness via LLM-as-judge.',
-        '120+ tests and CI on GitHub Actions; swappable LLM provider (Ollama or Claude).',
+        'Custom Bayesian inference network (Turtle & Croft) and inverted index, plus ChromaDB vector search; the RAG pipeline merges both result sets.',
+        'Evaluated with P@k, MAP, MRR and nDCG on frozen custom qrels (15 queries, 22-document corpus).',
+        '120+ tests and frontend CI on GitHub Actions; swappable LLM provider (Ollama or Claude).',
       ],
     },
     stack: ['Python', 'FastAPI', 'ChromaDB', 'React', 'Docker'],
@@ -225,12 +225,12 @@ export const projects: Project[] = [
         en: 'Tech RAG: a RAG search engine built from scratch with a Bayesian inference network, ChromaDB and cited answers. Evaluated with MAP and nDCG; 120+ tests.',
       },
       problem: {
-        es: 'Responder preguntas técnicas con información actual de GitHub, Hacker News, StackExchange, Dev.to y arXiv, citando siempre las fuentes. Es un proyecto personal para construir desde cero cada módulo de un sistema de recuperación de información (adquisición, indexado, recuperación, ranking, RAG y evaluación) sin frameworks de orquestación.',
-        en: 'Answer technical questions with current information from GitHub, Hacker News, StackExchange, Dev.to and arXiv, always citing sources. A personal project to build every module of an information retrieval system (acquisition, indexing, retrieval, ranking, RAG and evaluation) from scratch, with no orchestration framework.',
+        es: 'Responder preguntas técnicas con información actual de GitHub, Hacker News, StackExchange, Dev.to y arXiv, citando sus fuentes. Es un proyecto personal para construir desde cero cada módulo de un sistema de recuperación de información (adquisición, indexado, recuperación, ranking, RAG y evaluación) sin frameworks de orquestación.',
+        en: 'Answer technical questions with current information from GitHub, Hacker News, StackExchange, Dev.to and arXiv, citing its sources. A personal project to build every module of an information retrieval system (acquisition, indexing, retrieval, ranking, RAG and evaluation) from scratch, with no orchestration framework.',
       },
       architecture: {
-        es: 'Conectores a 5 APIs, refrescados con APScheduler, alimentan SQLite, un índice invertido propio con TF-IDF y ChromaDB con embeddings. Dos recuperadores (una red de inferencia bayesiana y uno vectorial) alimentan un ranker (relevancia, recencia, autoridad y feedback) y el pipeline RAG, que genera respuestas citadas con Ollama o Anthropic. FastAPI sirve una SPA en React; CLIP añade búsqueda de imágenes.',
-        en: 'Connectors to 5 APIs, refreshed with APScheduler, feed SQLite, a custom TF-IDF inverted index and ChromaDB embeddings. Two retrievers (a Bayesian inference network and a vector one) feed a ranker (relevance, recency, authority and feedback) and the RAG pipeline, which generates cited answers with Ollama or Anthropic. FastAPI serves a React SPA; CLIP adds image search.',
+        es: 'Conectores a 5 APIs, refrescados con APScheduler, alimentan SQLite, un índice invertido propio con TF-IDF y ChromaDB con embeddings. Dos recuperadores (una red de inferencia bayesiana y uno vectorial) alimentan un ranker (relevancia, recencia, autoridad y feedback) y el pipeline RAG, que genera respuestas citadas con Ollama o Anthropic. FastAPI expone la API y una SPA en React (servida por nginx) la consume; CLIP añade búsqueda de imágenes.',
+        en: 'Connectors to 5 APIs, refreshed with APScheduler, feed SQLite, a custom TF-IDF inverted index and ChromaDB embeddings. Two retrievers (a Bayesian inference network and a vector one) feed a ranker (relevance, recency, authority and feedback) and the RAG pipeline, which generates cited answers with Ollama or Anthropic. FastAPI exposes the API and a React SPA (served by nginx) consumes it; CLIP adds image search.',
       },
       diagram: {
         src: techRagArch,
@@ -271,16 +271,16 @@ export const projects: Project[] = [
       ],
       validation: {
         es: [
-          'Precision@k, Recall@k, MAP, MRR y nDCG (scripts/evaluate.py o POST /api/evaluation/run).',
-          'Fidelidad del RAG medida con LLM-as-judge.',
+          'Precision@k, Recall@k, MAP, MRR y nDCG (scripts/evaluate.py o POST /api/evaluation/run) sobre 15 consultas y un corpus de 22 documentos, solo para el recuperador bayesiano.',
+          'Módulo de fidelidad del RAG con LLM-as-judge, implementado y con tests (aún no integrado en scripts/evaluate.py).',
           'Más de 120 tests en pytest; Vitest y Testing Library en el frontend.',
-          'CI en GitHub Actions: lint y tests en cada push, backend y frontend por separado.',
+          'CI en GitHub Actions para el frontend (lint, tipos y tests).',
         ],
         en: [
-          'Precision@k, Recall@k, MAP, MRR and nDCG (scripts/evaluate.py or POST /api/evaluation/run).',
-          'RAG faithfulness measured with LLM-as-judge.',
+          'Precision@k, Recall@k, MAP, MRR and nDCG (scripts/evaluate.py or POST /api/evaluation/run) over 15 queries and a 22-document corpus, for the Bayesian retriever only.',
+          'RAG-faithfulness module using an LLM judge: implemented and unit-tested, not yet wired into scripts/evaluate.py.',
           '120+ pytest tests; Vitest and Testing Library on the frontend.',
-          'GitHub Actions CI: lint and tests on every push, backend and frontend separately.',
+          'GitHub Actions CI for the frontend (lint, types and tests).',
         ],
       },
       gallery: [
@@ -302,8 +302,8 @@ export const projects: Project[] = [
             en: 'RAG answer panel with numbered citations and the linked source list.',
           },
           caption: {
-            es: 'La respuesta enlaza sus fuentes con citas numeradas y avisa cuando no cubren la pregunta.',
-            en: "The answer links its sources with numbered citations and says when they don't cover the question.",
+            es: 'La respuesta enlaza sus fuentes con citas numeradas; el prompt le pide avisar cuando no cubren la pregunta.',
+            en: "The answer links its sources with numbered citations; the prompt asks it to say when they don't cover the question.",
           },
         },
       ],
@@ -321,13 +321,13 @@ export const projects: Project[] = [
     highlights: {
       es: [
         'Access token de 15 min en memoria y refresh de 30 días en cookie httpOnly, guardado solo como hash SHA-256.',
-        'Reutilizar un refresh token revoca toda la sesión.',
-        'Matriz de permisos cubierta por tests; 404 en vez de 403 cuando un 403 revelaría qué existe.',
+        'Reutilizar un refresh token revoca todas las sesiones del usuario.',
+        'Matriz de permisos cubierta por tests; 404 en vez de 403 en el detalle de proyecto, para no revelar qué existe.',
       ],
       en: [
         '15-minute in-memory access token and 30-day httpOnly refresh cookie, stored only as a SHA-256 hash.',
-        'Reusing a refresh token revokes the whole session.',
-        'Permission matrix covered by tests; 404 instead of 403 where a 403 would reveal what exists.',
+        "Reusing a refresh token revokes all of the user's sessions.",
+        "Permission matrix covered by tests; 404 instead of 403 on project detail, so it doesn't reveal what exists.",
       ],
     },
     stack: ['TypeScript', 'Express', 'PostgreSQL', 'Prisma', 'React'],
@@ -341,12 +341,12 @@ export const projects: Project[] = [
     },
     caseStudy: {
       description: {
-        es: 'GuildWork: gestor de proyectos con 3 roles, permisos en el servidor cubiertos por tests y JWT de dos tokens con rotación y detección de reuso.',
-        en: 'GuildWork: a project manager with 3 roles, server-side permissions covered by tests, and two-token JWT auth with rotation and reuse detection.',
+        es: 'GuildWork: gestor de proyectos con 3 roles, permisos en el servidor cubiertos por tests, access JWT y refresh opaco rotativo con detección de reuso.',
+        en: 'GuildWork: project manager with 3 roles, server-enforced permissions covered by tests, access JWT plus rotating opaque refresh token with reuse detection.',
       },
       problem: {
-        es: 'Gestor de proyectos para una consultora de software: Admins y PMs llevan clientes, proyectos y bugs, y cada Developer solo ve lo que tiene asignado. El foco es la seguridad: que robar un token sirva de poco, que las sesiones se puedan revocar y que los permisos se apliquen en el servidor.',
-        en: "A project manager for a software consultancy: Admins and PMs run clients, projects and bugs, while each Developer only sees what they're assigned. The focus is security: a stolen token should be worth little, sessions must be revocable, and permissions enforced server-side.",
+        es: 'Gestor de proyectos modelado sobre una consultora de software (proyecto personal, con datos de demostración): Admins y PMs llevan clientes, proyectos y bugs, y cada Developer solo ve lo que tiene asignado. El foco es la seguridad: que robar un token sirva de poco, que las sesiones se puedan revocar y que los permisos se apliquen en el servidor.',
+        en: "A project manager modelled on a software consultancy (a personal project with demo data): Admins and PMs run clients, projects and bugs, while each Developer only sees what they're assigned. The focus is security: a stolen token should be worth little, sessions must be revocable, and permissions enforced server-side.",
       },
       architecture: {
         es: 'Monorepo con npm workspaces. El backend usa Express + TypeScript y PostgreSQL vía Prisma, con handlers finos, módulos de auth y autorización testables por separado y validación con zod. El frontend usa React + Vite, TanStack Query y Recharts; su wrapper de fetch captura un 401, hace un refresco silencioso por cookie y repite la petición una sola vez. Incluye auditoría, informes PDF y emails.',
@@ -416,13 +416,13 @@ export const projects: Project[] = [
           'La suite del backend (Vitest, Prisma mockeado) prioriza la matriz de autorización: misma petición y respuesta correcta para Admin, PM y Developer.',
           'Cubre la restricción por campo en bugs y la detección de reuso del refresh token.',
           'Frontend probado con Vitest y Testing Library.',
-          'En producción: cookie Secure, redirección HTTPS de respaldo y noindex (app privada).',
+          'Configuración de producción: cookie Secure, redirección HTTPS de respaldo y noindex (app privada).',
         ],
         en: [
           'The backend suite (Vitest, mocked Prisma) prioritizes the authorization matrix: same request, correct response for Admin, PM and Developer.',
           'Covers the per-field bug restriction and refresh-token reuse detection.',
           'Frontend tested with Vitest and Testing Library.',
-          'In production: Secure cookie, a backstop HTTPS redirect and noindex (private app).',
+          'Production configuration: Secure cookie, a backstop HTTPS redirect and noindex (private app).',
         ],
       },
       gallery: [
@@ -466,6 +466,7 @@ export const projects: Project[] = [
     slug: 'captive-portal',
     title: 'Captive Portal',
     repo: 'jccarmenate/Captive-Portal',
+    team: 2,
     summary: {
       es: 'Portal cautivo, como el Wi-Fi de un hotel: iptables/ipset por IP+MAC, nginx con TLS y login con PBKDF2.',
       en: 'Captive portal, like hotel Wi-Fi: iptables/ipset per IP+MAC, nginx TLS and a PBKDF2 login with rate limits.',
@@ -487,7 +488,7 @@ export const projects: Project[] = [
     team: 2,
     summary: {
       es: 'Chat P2P sin servidor: protocolo propio sobre Ethernet (AF_PACKET, CRC16) y app Flutter cifrada.',
-      en: 'Server-less P2P chat: a custom protocol over raw Ethernet (AF_PACKET, CRC16) and an encrypted Flutter app.',
+      en: 'P2P chat with no server: a custom raw-Ethernet protocol (AF_PACKET, CRC16) and an encrypted Flutter app.',
     },
     stack: ['Python', 'Flutter/Dart', 'Docker'],
     cover: {
@@ -503,6 +504,7 @@ export const projects: Project[] = [
     slug: 'matcom-guard',
     title: 'MatCom Guard',
     repo: 'jccarmenate/MatCom-Guard',
+    team: 3,
     summary: {
       es: 'Monitor de seguridad en C que vigila USB, procesos y puertos en tiempo real, con interfaz GTK multihilo.',
       en: 'Real-time security monitor in C that watches USB devices, processes and ports, with a multithreaded GTK UI.',
@@ -540,8 +542,8 @@ export const projects: Project[] = [
     title: 'HexArena',
     repo: 'jccarmenate/HexArena',
     summary: {
-      es: 'Juego de Hex para Windows con IA propia (MCTS + RAVE) en un único .exe: contra la IA, local y en red.',
-      en: 'Hex game for Windows with a self-built MCTS + RAVE AI in one portable .exe: vs AI, local and networked.',
+      es: 'Hex para Windows en un único .exe, con IA MCTS + RAVE adaptada de un proyecto universitario; local y en red.',
+      en: 'Hex for Windows in one .exe, with an MCTS + RAVE AI adapted from a university project; local and networked.',
     },
     stack: ['Python', 'pywebview'],
     cover: {
@@ -558,8 +560,8 @@ export const projects: Project[] = [
     title: 'HULK IDE',
     repo: 'jccarmenate/hulk-ide',
     summary: {
-      es: 'Servidor LSP y extensión de VS Code para HULK, sobre un compilador Rust/LLVM: diagnósticos en vivo.',
-      en: 'LSP server and VS Code extension for the HULK language, built on a Rust/LLVM compiler, with live diagnostics.',
+      es: 'IDE personal para HULK (LSP + VS Code) sobre el compilador Rust/LLVM hecho en equipo de 3.',
+      en: 'Personal HULK IDE (LSP + VS Code) on top of a Rust/LLVM compiler built by a team of 3.',
     },
     stack: ['Rust', 'TypeScript', 'LLVM', 'LSP'],
     cover: {
